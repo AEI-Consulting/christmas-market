@@ -24,5 +24,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: yarn --frozen-lockfile
+    - run: git config user.name "Builder"
+    - run: git config user.email "builder@github.com"
     - run: yarn run deploy
 
