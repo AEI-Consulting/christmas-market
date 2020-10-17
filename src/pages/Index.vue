@@ -10,6 +10,12 @@
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur excepturi labore tempore expedita, et iste tenetur suscipit explicabo! Dolores, aperiam non officia eos quod asperiores
     </p>
 
+    <div v-for="product in $page.data.products" :key="product.id">
+    {{product.name}}
+
+    </div>
+
+
     <p class="home-links">
       <a href="https://gridsome.org/docs/" target="_blank" rel="noopener">Gridsome Docs</a>
       <a href="https://github.com/gridsome/gridsome" target="_blank" rel="noopener">GitHub</a>
@@ -17,6 +23,17 @@
 
   </Layout>
 </template>
+
+<page-query>
+query {
+  data {
+    products {
+      name
+      id
+    }
+  }
+}
+</page-query>
 
 <script>
 export default {
