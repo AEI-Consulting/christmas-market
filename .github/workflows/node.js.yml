@@ -18,7 +18,7 @@ jobs:
     - name: Generate
       uses: CultureHQ/actions-yarn@v1.0.1
     - run: yarn --frozen-lockfile
-    - run: yarn build
+    - run: AUTH_TOKEN=${{ secrets.GRAPH_CMS_TOKEN }} yarn build
     - 
       name: Deploy to GitHub Pages
       if: success()
