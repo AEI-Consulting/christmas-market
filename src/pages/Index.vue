@@ -11,7 +11,7 @@
     </p>
 
     <div v-for="product in $page.data.products" :key="product.id">
-    {{product.name}}
+    <h2>{{product.name}}</h2>
 
     </div>
 
