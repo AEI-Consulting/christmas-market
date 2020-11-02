@@ -3,7 +3,7 @@
     <h1>Markets</h1>
 
     <div v-for="market in $page.data.markets" :key="market.code">
-      <p><g-link class="nav__link" :to="`/markets/${market.code}`">{{market.name}}</g-link></p>
+      <p><g-link class="nav__link" :to="$tp(`/markets/${market.code}`)">{{market.name}}</g-link></p>
     </div>
   </Layout>
 </template>

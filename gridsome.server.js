@@ -25,31 +25,49 @@ module.exports = function (api) {
       }
     }`)
 
-    data.data.markets.forEach(({ code }) => {
+    data.data.markets.forEach(({ code, locale }) => {
       createPage({
         path: `/markets/${code}`,
         component: './src/templates/Market.vue',
         context: {
-          code
+          code,
+          locale
+        },
+        route: {
+          meta: {
+            locale
+          }
         }
       })
     })
 
-    data.data.exhibitors.forEach(({ code, products }) => {
+    data.data.exhibitors.forEach(({ code, products, locale }) => {
       createPage({
         path: `/exhibitors/${code}`,
         component: './src/templates/Exhibitor.vue',
         context: {
-          code
+          code,
+          locale
+        },
+        route: {
+          meta: {
+            locale
+          }
         }
       })
 
-      products.forEach(({ id }) => {
+      products.forEach(({ id, locale }) => {
         createPage({
           path: `/exhibitors/${code}/products/${id}`,
           component: './src/templates/Product.vue',
           context: {
-            id
+            id,
+            locale
+          },
+          route: {
+            meta: {
+              locale
+            }
           }
         })
       })

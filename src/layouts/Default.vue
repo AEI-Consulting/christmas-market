@@ -5,11 +5,13 @@
         <g-link to="/">{{ $static.metadata.siteName }}</g-link>
       </strong>
       <nav class="nav">
-        <g-link class="nav__link" to="/">Home</g-link>
-        <g-link class="nav__link" to="/about/">About</g-link>
+        <g-link class="nav__link" :to="$tp('/about/')">{{$t('about')}}</g-link>
       </nav>
     </header>
     <slot/>
+    <footer class="footer">
+      <locale-switcher/>
+    </footer>
   </div>
 </template>
 
@@ -20,6 +22,16 @@ query {
   }
 }
 </static-query>
+
+<script>
+import LocaleSwitcher from '../components/LocaleSwitcher.vue'
+
+export default {
+  components: {
+    LocaleSwitcher
+  }
+}
+</script>
 
 <style>
 body {
@@ -42,6 +54,10 @@ body {
   align-items: center;
   margin-bottom: 20px;
   height: 80px;
+}
+
+.footer {
+  float: right;
 }
 
 .nav__link {

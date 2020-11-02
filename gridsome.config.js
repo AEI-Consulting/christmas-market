@@ -11,5 +11,25 @@ module.exports = {
         Authorization: `Bearer ${process.env.AUTH_TOKEN}`,
       },
     },
+  }, {
+    use: "gridsome-plugin-i18n",
+    options: {
+      locales: [
+        'fr-be',
+        'nl-be'
+      ],
+      pathAliases: {
+        'fr-be': 'fr',
+        'nl-be': 'nl'
+      },
+      fallbackLocale: 'fr-be',
+      defaultLocale: 'fr-be',
+      enablePathRewrite: true,
+      rewriteDefaultLanguage: true,
+      messages: {
+        'fr-be': require('./src/locales/fr-be.json'),
+        'nl-be': require('./src/locales/nl-be.json')
+      }
+    }
   }]
 };

@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <h1>About us</h1>
+    <h1>{{$t('about')}}</h1>
 
     <p>We are two guys.</p>
   </Layout>
