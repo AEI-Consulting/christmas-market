@@ -10,7 +10,49 @@ module.exports = function (api) {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
   })
 
-  api.createPages(({ createPage }) => {
-    // Use the Pages API here: https://gridsome.org/docs/pages-api/
+  api.createPages(async ({ graphql, createPage }) => {
+    const { data } = await graphql(`{
+      data {
+        markets {
+          code
+        }
+        exhibitors {
+          code
+          products {
+            id
+          }
+        }
+      }
+    }`)
+
+    data.data.markets.forEach(({ code }) => {
+      createPage({
+        path: `/markets/${code}`,
+        component: './src/templates/Market.vue',
+        context: {
+          code
+        }
+      })
+    })
+
+    data.data.exhibitors.forEach(({ code, products }) => {
+      createPage({
+        path: `/exhibitors/${code}`,
+        component: './src/templates/Exhibitor.vue',
+        context: {
+          code
+        }
+      })
+
+      products.forEach(({ id }) => {
+        createPage({
+          path: `/exhibitors/${code}/products/${id}`,
+          component: './src/templates/Product.vue',
+          context: {
+            id
+          }
+        })
+      })
+    })
   })
 }
