@@ -5,9 +5,9 @@
       <p>Sur ce site, vous pouvez retrouver vos marchés de Noël, vos exposants et vos produits préférés pour les commander et les obtenir à temps pour le Noël de cette année 2020 un peu particulière.</p>
     </div>
     <div class="homecards">
-      <section-card :name="$t('markets')" link="/markets/" img="/img/christmas-tree.svg" />
-      <section-card :name="$t('exhibitors')" link="/exhibitors/" img="/img/market.svg" />
-      <section-card :name="$t('products')" link="/products/" img="/img/spices.svg" />
+      <section-card :name="$t('markets')" link="/markets/" img="christmas-tree.svg" />
+      <section-card :name="$t('exhibitors')" link="/exhibitors/" img="market.svg" />
+      <section-card :name="$t('products')" link="/products/" img="spices.svg" />
     </div>
   </Layout>
 </template>

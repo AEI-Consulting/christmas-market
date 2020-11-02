@@ -1,7 +1,7 @@
 <template>
   <g-link class="card nav__link" :to="$tp(link)">
     <div>{{name}}</div>
-    <img :src="img">
+    <g-image :src="require(`@/assets/${img}`)" />
   </g-link>
 </template>
 
