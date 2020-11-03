@@ -29,6 +29,9 @@ export default function (Vue, { appOptions, head }) {
         } else {
           state.cart.push({ product, quantity });
         }
+      },
+      emptyCart (state) {
+        state.cart = [];
       }
     },
     getters: {

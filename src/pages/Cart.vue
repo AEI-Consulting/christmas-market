@@ -17,6 +17,8 @@
           <td>{{item.quantity}}</td>
         </tr>
       </table>
+
+      <button @click="emptyCart()">Empty cart</button>
     </div>
   </Layout>
 </template>
@@ -25,6 +27,11 @@
 export default {
   metaInfo: {
     title: 'Cart'
+  },
+  methods: {
+    emptyCart() {
+      this.$store.commit('emptyCart');
+    }
   }
 }
 </script>
