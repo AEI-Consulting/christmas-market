@@ -5,7 +5,8 @@
         <g-link to="/">{{ $static.metadata.siteName }}</g-link>
       </strong>
       <nav class="nav">
-        <g-link class="nav__link" :to="$tp('/about/')">{{$t('about')}}</g-link>
+        <g-link class="nav__link" :to="$tp('/about/')">{{$t("about")}}</g-link>
+        <g-link class="nav__link" :to="$tp('/cart/')">{{$t("cart")}}</g-link>
       </nav>
     </header>
     <slot/>
@@ -24,7 +25,7 @@ query {
 </static-query>
 
 <script>
-import LocaleSwitcher from '../components/LocaleSwitcher.vue'
+import LocaleSwitcher from "../components/LocaleSwitcher.vue"
 
 export default {
   components: {
