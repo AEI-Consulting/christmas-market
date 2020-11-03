@@ -5,8 +5,12 @@
         <g-link to="/">{{ $static.metadata.siteName }}</g-link>
       </strong>
       <nav class="nav">
-        <g-link class="nav__link" :to="$tp('/about/')">{{$t("about")}}</g-link>
-        <g-link class="nav__link" :to="$tp('/cart/')">{{$t("cart")}}</g-link>
+        <g-link class="nav__link" :to="$tp('/about/')">
+          <b-icon icon="information" size="is-small"></b-icon>&nbsp;{{$t("about")}}
+        </g-link>
+        <g-link class="nav__link" :to="$tp('/cart/')">
+          <b-icon icon="cart" size="is-small"></b-icon>&nbsp;{{$t("cart")}}&nbsp;<b-tag v-if="!$store.getters.isCartEmpty" type="is-danger">{{$store.getters.cartSize}}</b-tag>
+        </g-link>
       </nav>
     </header>
     <slot/>
@@ -58,7 +62,7 @@ body {
 }
 
 .footer {
-  float: right;
+  text-align: right;
 }
 
 .nav__link {

@@ -19,7 +19,7 @@ export default {
 <style scoped>
 .card {
   border: 1px solid #aaa;
-  width: 248px;
+  width: 236px;
   height: 160px;
   margin: 0;
   text-decoration: none;

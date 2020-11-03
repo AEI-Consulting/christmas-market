@@ -1,11 +1,22 @@
-import Vuex from "vuex"
-import DefaultLayout from "~/layouts/Default.vue"
+import Buefy from 'buefy'
+import Vuex from 'vuex'
 
-export default function (Vue, { router, head, isClient, appOptions }) {
-  Vue.component("Layout", DefaultLayout)
+import DefaultLayout from '~/layouts/Default.vue'
 
-  Vue.use(Vuex)
+import 'buefy/dist/buefy.css'
 
+export default function (Vue, { appOptions, head }) {
+  Vue.component('Layout', DefaultLayout);
+
+  // Configure the Buefy UI components framework
+  Vue.use(Buefy);
+  head.link.push({
+    rel: 'stylesheet',
+    href: 'https://cdn.materialdesignicons.com/5.3.45/css/materialdesignicons.min.css'
+  });
+
+  // Configure the Vuex store
+  Vue.use(Vuex);
   appOptions.store = new Vuex.Store({
     state: {
       cart: []
@@ -16,9 +27,17 @@ export default function (Vue, { router, head, isClient, appOptions }) {
         if (item) {
           item.quantity += quantity;
         } else {
-          state.cart.push({ product, quantity })
+          state.cart.push({ product, quantity });
         }
       }
+    },
+    getters: {
+      isCartEmpty(state) {
+        return state.cart.length === 0;
+      },
+      cartSize(state) {
+        return state.cart.length;
+      }
     }
-  })
+  });
 }
