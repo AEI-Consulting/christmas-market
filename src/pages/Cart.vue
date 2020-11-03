@@ -9,12 +9,18 @@
     <div v-else>
       <table class="table">
         <tr>
+          <th>Exhibitor</th>
           <th>Product</th>
+          <th>Unit price</th>
           <th>Quantity</th>
+          <th>Price</th>
         </tr>
         <tr v-for="item in $store.state.cart" :key="item.product.id">
+          <td>{{item.product.exhibitor.name}}</td>
           <td>{{item.product.name}}</td>
+          <td>{{item.product.price}} €</td>
           <td>{{item.quantity}}</td>
+          <td>{{item.quantity * item.product.price}} €</td>
         </tr>
       </table>
 

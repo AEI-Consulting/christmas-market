@@ -17,8 +17,10 @@ query {
         url
       }
       name
+      price
       exhibitor {
         code
+        name
       }
     }
   }

@@ -1,5 +1,8 @@
 <template>
   <g-link class="card" :to="$tp(link)">
+    <div class="card-top">
+      <slot name="top"></slot>
+    </div>
     <div class="card-image">
       <figure class="image is-4by3">
       <g-image :src="imagePath" />
@@ -42,6 +45,12 @@ export default {
 .card:hover {
   box-shadow: none;
   border: 1px solid #999;
+}
+
+.card-top {
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
 .card-image img {

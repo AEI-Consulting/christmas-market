@@ -1,7 +1,11 @@
 <template>
   <image-card :text="product.name" :link="`/exhibitors/${product.exhibitor.code}/products/${product.id}`" :img="product.image">
+    {{product.name}}<br>{{product.price}} €
+    <template v-if="bought > 0" v-slot:top>
+      <b-tag type="is-danger">{{bought}}&nbsp;<b-icon icon="cart" size="is-small"></b-icon></b-tag>
+    </template>
     <template v-slot:end>
-      <button @click.prevent="addToCart(product)"><b-icon icon="cart-plus" size="is-small"></b-icon></button>
+      <b-button type="is-info" size="is-small" icon-left="cart-plus" @click.prevent="addToCart(product)"></b-button>
     </template>
   </image-card>
 </template>
@@ -16,6 +20,12 @@ export default {
   },
   props: {
     product: Object
+  },
+  computed: {
+    bought() {
+      const item = this.$store.state.cart.find(p => p.product.id === this.product.id);
+      return item ? item.quantity : 0;
+    }
   },
   methods: {
     addToCart(product) {

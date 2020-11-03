@@ -39,7 +39,7 @@ export default function (Vue, { appOptions, head }) {
         return state.cart.length === 0;
       },
       cartSize(state) {
-        return state.cart.length;
+        return state.cart.reduce((nb, p) => nb + p.quantity, 0);
       }
     }
   });
