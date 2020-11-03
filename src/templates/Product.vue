@@ -1,8 +1,8 @@
 <template>
   <Layout>
-    <h1>{{$page.data.product.name}}</h1>
+    <h2 class="title is-2">{{$page.data.product.name}}</h2>
 
-    <button @click="addToCart()">Add to cart</button>
+    <button @click="addToCart">Add to cart</button>
   </Layout>
 </template>
 

@@ -1,10 +1,10 @@
 <template>
   <Layout>
-    <h1>Exhibitors</h1>
+    <h2 class="title is-2">{{$t('exhibitors')}}</h2>
 
-    <div v-for="exhibitor in $page.data.exhibitors" :key="exhibitor.code">
-      <p><g-link class="nav__link" :to="$tp(`/exhibitors/${exhibitor.code}`)">{{exhibitor.name}}</g-link></p>
-    </div>
+    <card-list>
+      <image-card v-for="exhibitor in $page.data.exhibitors" :key="exhibitor.code" :text="exhibitor.name" :link="`/exhibitors/${exhibitor.code}`" :img="exhibitor.image" />
+    </card-list>
   </Layout>
 </template>
 
@@ -13,6 +13,9 @@ query {
   data {
     exhibitors {
       code
+      image {
+        url
+      }
       name
     }
   }
@@ -20,7 +23,14 @@ query {
 </page-query>
 
 <script>
+import CardList from '~/components/CardList.vue'
+import ImageCard from '~/components/ImageCard.vue'
+
 export default {
+  components: {
+    CardList,
+    ImageCard
+  },
   metaInfo: {
     title: 'Exhibitors'
   }

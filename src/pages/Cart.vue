@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <h1 class="title">{{$t('cart')}}</h1>
+    <h2 class="title is-2">{{$t('cart')}}</h2>
 
     <div v-if="$store.getters.isCartEmpty">
       <p>Your cart is currently empty.</p>

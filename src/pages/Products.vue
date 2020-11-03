@@ -1,10 +1,10 @@
 <template>
   <Layout>
-    <h1>Products</h1>
+    <h2 class="title is-2">{{$t('products')}}</h2>
 
-    <div v-for="product in $page.data.products" :key="product.id">
-      <p><g-link class="nav__link" :to="$tp(`/exhibitors/${product.exhibitor.code}/products/${product.id}`)">{{product.name}}</g-link></p>
-    </div>
+    <card-list>
+      <product-card v-for="product in $page.data.products" :key="product.id" :product="product" />
+    </card-list>
   </Layout>
 </template>
 
@@ -13,6 +13,9 @@ query {
   data {
     products {
       id
+      image {
+        url
+      }
       name
       exhibitor {
         code
@@ -23,7 +26,14 @@ query {
 </page-query>
 
 <script>
+import CardList from '~/components/CardList.vue'
+import ProductCard from '~/components/ProductCard.vue'
+
 export default {
+  components: {
+    CardList,
+    ProductCard
+  },
   metaInfo: {
     title: 'Products'
   }
