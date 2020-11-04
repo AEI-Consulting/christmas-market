@@ -5,6 +5,8 @@ import DefaultLayout from '~/layouts/Default.vue'
 
 import 'buefy/dist/buefy.css'
 
+const numeral = require('numeral');
+
 export default function (Vue, { appOptions, head }) {
   Vue.component('Layout', DefaultLayout);
 
@@ -14,6 +16,19 @@ export default function (Vue, { appOptions, head }) {
     rel: 'stylesheet',
     href: 'https://cdn.materialdesignicons.com/5.3.45/css/materialdesignicons.min.css'
   });
+
+  // Configure and define a filter to format numbers
+  numeral.register('locale', 'fr', {
+    delimiters: {
+      thousands: ' ',
+      decimal: ','
+    }
+  });
+  numeral.locale('fr');
+
+  Vue.filter('formatNumber', function (value) {
+    return numeral(value).format('0.00');
+  })
 
   // Configure the Vuex store
   Vue.use(Vuex);
@@ -40,6 +55,9 @@ export default function (Vue, { appOptions, head }) {
       },
       cartSize(state) {
         return state.cart.reduce((nb, p) => nb + p.quantity, 0);
+      },
+      totalPrice(state) {
+        return state.cart.reduce((price, p) => price + (p.quantity * p.product.price), 0);
       }
     }
   });

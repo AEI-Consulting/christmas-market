@@ -9,11 +9,11 @@
             {{$page.data.exhibitor.presentation}}
           </div>
           <div v-if="$page.data.exhibitor.website">
-            <b-icon icon="web" size="is-small" />&nbsp;Website
+            <b-icon icon="web" size="is-small" />&nbsp;
             <g-link :to="$page.data.exhibitor.website">{{$page.data.exhibitor.website}}</g-link>
           </div>
           <div v-if="$page.data.exhibitor.facebook">
-            <b-icon icon="facebook" size="is-small" />&nbsp;Facebook
+            <b-icon icon="facebook" size="is-small" />&nbsp;
             <g-link :to="`https://www.facebook.com/${$page.data.exhibitor.facebook}`">{{$page.data.exhibitor.facebook}}</g-link>
           </div>
         </div>

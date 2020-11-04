@@ -18,9 +18,13 @@
         <tr v-for="item in $store.state.cart" :key="item.product.id">
           <td>{{item.product.exhibitor.name}}</td>
           <td>{{item.product.name}}</td>
-          <td>{{item.product.price}} €</td>
+          <td>{{item.product.price | formatNumber}} €</td>
           <td>{{item.quantity}}</td>
-          <td>{{item.quantity * item.product.price}} €</td>
+          <td>{{item.quantity * item.product.price | formatNumber}} €</td>
+        </tr>
+        <tr>
+          <th colspan="4">Total</th>
+          <td>{{this.$store.getters.totalPrice | formatNumber}} €</td>
         </tr>
       </table>
 

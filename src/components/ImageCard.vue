@@ -51,6 +51,7 @@ export default {
   position: absolute;
   top: 5px;
   right: 5px;
+  z-index: 10;
 }
 
 .card-image img {
