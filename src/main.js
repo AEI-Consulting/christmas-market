@@ -45,6 +45,7 @@ export default function (Vue, { appOptions, head }) {
     }
   });
 
+  console.log(process.env.GRIDSOME_RECAPTCHA_KEY)
   // Configure reCaptcha
   Vue.use(VueReCaptcha, { siteKey: process.env.GRIDSOME_RECAPTCHA_KEY })
 }
