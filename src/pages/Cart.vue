@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <h2 class="title is-2">{{$t('cart')}}</h2>
+    <h2 class="title is-2">{{ $t('cart') }}</h2>
 
     <div v-if="$store.getters.isCartEmpty">
       <p>Your cart is currently empty.</p>
@@ -28,7 +28,8 @@
         </tr>
       </table>
 
-      <button @click="emptyCart()">Empty cart</button>
+      <button @click="emptyCart">Empty cart</button>
+      <button @click="placeOrder">Order</button>
     </div>
   </Layout>
 </template>
@@ -36,12 +37,18 @@
 <script>
 export default {
   metaInfo: {
-    title: 'Cart'
+    title: "Cart",
   },
   methods: {
     emptyCart() {
       this.$store.commit('emptyCart');
+    },
+    async placeOrder() {
+      await this.$recaptchaLoaded();
+
+      const token = await this.$recaptcha('Order');
+      console.log(token)
     }
-  }
-}
+  },
+};
 </script>

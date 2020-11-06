@@ -1,5 +1,6 @@
 import Buefy from 'buefy'
 import Vuex from 'vuex'
+import { VueReCaptcha } from 'vue-recaptcha-v3'
 
 import DefaultLayout from '~/layouts/Default.vue'
 
@@ -61,4 +62,7 @@ export default function (Vue, { appOptions, head }) {
       }
     }
   });
+
+  // Configure reCaptcha
+  Vue.use(VueReCaptcha, { siteKey: '6LfrR98ZAAAAANtPm1ARhN5aql1uXVFcQOd6bjWg' })
 }
