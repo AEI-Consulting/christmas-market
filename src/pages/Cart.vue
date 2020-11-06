@@ -9,7 +9,7 @@
     <div v-else>
       <p>{{ $t('cart.summary', { nbExhibitors: nbExhibitors, total: $options.filters.formatNumber($store.getters.totalPrice()) }) }}</p>
 
-      <b-collapse v-for="(code, i) in Object.keys(structuredCart)" :key="i" :open="isOpen == i" @open="isOpen = i" class="card orders" animation="slide">
+      <b-collapse v-for="(code, i) in Object.keys(structuredCart)" :key="i" :open="isOpen === i" @open="isOpen = i" class="card orders" animation="slide">
         <div slot="trigger" slot-scope="props" class="card-header" role="button">
           <p class="card-header-title">{{structuredCart[code].name}}</p>
           <a class="card-header-icon"><b-icon :icon="props.open ? 'menu-down' : 'menu-up'"></b-icon></a>

@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <h2 class="title is-2">{{$t("markets")}}</h2>
+    <h2 class="title is-2">{{ $tc('market._', 2) }}</h2>
 
     <div class="text">
       <p>Blablabla petit texte d'introduction</p>

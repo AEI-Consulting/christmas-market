@@ -1,17 +1,20 @@
 {
   "about": "À propos",
   "market": {
-    "_": "Marché | Marchés"
+    "_": "Marché | Marché | Marchés"
   },
   "exhibitor": {
-    "_": "Exposant | Exposants"
+    "_": "Exposant | Exposant | Exposants",
+    "video": "Vidéo de présentation"
   },
   "product": {
-    "_": "Produit | Produits"
+    "_": "Produit | Produit | Produits",
+    "no": "Aucun produit disponible pour le moment."
   },
   "no-products-yet": "Il n'y a aucun produit disponible pour le moment.",
   "cart": {
     "_": "Panier",
+    "add": "Ajouter au panier",
     "is-empty": "Votre panier est actuellement vide.",
     "summary": "Vous avez commandé des produits auprès de {nbExhibitors} exposant(s), pour un total de {total} €.",
     "empty": "Vider tout le panier",

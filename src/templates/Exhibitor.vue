@@ -1,53 +1,53 @@
 <template>
   <Layout>
-    <h2 class="title is-2">{{$page.data.exhibitor.name}}</h2>
+    <h2 class="title is-2">{{ exhibitor.name }}</h2>
 
     <div class="tile is-ancestor">
       <div class="tile is-parent is-8">
         <div class="tile is-child">
-          <div class="presentation">
-            {{$page.data.exhibitor.presentation}}
-          </div>
-          <div v-if="$page.data.exhibitor.website">
-            <b-icon icon="web" size="is-small" />&nbsp;
-            <g-link :to="$page.data.exhibitor.website">{{$page.data.exhibitor.website}}</g-link>
-          </div>
-          <div v-if="$page.data.exhibitor.facebook">
-            <b-icon icon="facebook" size="is-small" />&nbsp;
-            <g-link :to="`https://www.facebook.com/${$page.data.exhibitor.facebook}`">{{$page.data.exhibitor.facebook}}</g-link>
+          <div class="presentation" v-html="exhibitor.presentation"></div>
+
+          <div class="infobox">
+            <div v-if="exhibitor.website">
+              <b-icon icon="web" size="is-small" />&nbsp;
+              <g-link :to="exhibitor.website">{{exhibitor.website}}</g-link>
+            </div>
+            <div v-if="exhibitor.facebook">
+              <b-icon icon="facebook" size="is-small" />&nbsp;
+              <g-link :to="`https://www.facebook.com/${exhibitor.facebook}`">{{exhibitor.facebook}}</g-link>
+            </div>
           </div>
         </div>
       </div>
       <div class="tile is-parent is-vertical">
         <div class="tile is-child">
-          <g-image v-if="$page.data.exhibitor.image" :src="$page.data.exhibitor.image.url" />
+          <g-image v-if="exhibitor.image" :src="exhibitor.image.url" />
         </div>
-        <div class="tile is-child">
-          <button @click="isVideoModalActive = true">Open video</button>
+        <div class="tile is-child videoBtn" v-if="exhibitor.assetVideo">
+          <b-button type="is-info" size="is-small" icon-left="movie" @click="isVideoModalActive = true">{{ $t('exhibitor.video') }}</b-button>
         </div>
       </div>
     </div>
 
-    <b-modal v-model="isVideoModalActive">
+    <b-modal v-if="exhibitor.assetVideo" v-model="isVideoModalActive">
       <div class="video">
-        <div v-if="$page.data.exhibitor.assetVideo.__typename === 'data_Asset'">
+        <div v-if="exhibitor.assetVideo.__typename === 'data_Asset'">
           <video controls autoplay>
-            <source :src="$page.data.exhibitor.assetVideo.url">
+            <source :src="exhibitor.assetVideo.url">
           </video>
         </div>
-        <div v-else-if="$page.data.exhibitor.assetVideo.__typename === 'data_Video'" v-html="$page.data.exhibitor.assetVideo.html"></div>
+        <div v-else-if="exhibitor.assetVideo.__typename === 'data_Video'" v-html="exhibitor.assetVideo.html"></div>
       </div>
     </b-modal>
 
-    <h3 class="title is-3">{{$t('products')}}</h3>
+    <h3 class="title is-3">{{ $tc('product._', nbProducts) }}</h3>
 
-    <div v-if="!$page.data.exhibitor.products.length">
-      <p>{{$t('no_products_yet')}}</p>
-    </div>
-
-    <card-list v-if="$page.data.exhibitor.products.length">
-      <product-card v-for="product in $page.data.exhibitor.products" :key="product.id" :product="product" />
+    <card-list v-if="exhibitor.products.length">
+      <product-card v-for="product in exhibitor.products" :key="product.id" :product="product" />
     </card-list>
+    <div v-else>
+      <p>{{ $t('product.no') }}</p>
+    </div>
   </Layout>
 </template>
 
@@ -98,6 +98,14 @@ export default {
     CardList,
     ProductCard
   },
+  computed: {
+    exhibitor() {
+      return this.$page.data.exhibitor;
+    },
+    nbProducts() {
+      return this.exhibitor.products ? this.exhibitor.products.length : 0;
+    }
+  },
   data() {
     return {
         isVideoModalActive: false
@@ -112,6 +120,14 @@ export default {
   text-align: justify;
 }
 
+.infobox {
+  border-left: 3px solid #999;
+  padding-left: 10px;
+}
+
+.videoBtn {
+  text-align: right;
+}
 .video {
   margin: auto;
   text-align: center;
