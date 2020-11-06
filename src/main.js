@@ -2,6 +2,7 @@ import '~/assets/styles.scss'
 
 import Buefy from 'buefy'
 import Vuex from 'vuex'
+import VuexPersistence from 'vuex-persist'
 import { VueReCaptcha } from 'vue-recaptcha-v3'
 
 import DefaultLayout from '~/layouts/Default.vue'
@@ -60,7 +61,8 @@ export default function (Vue, { appOptions, head }) {
       totalPrice: (state) => (code) => {
         return state.cart.reduce((price, p) => price + (!code || (p.product.exhibitor.code === code) ? p.quantity * p.product.price : 0), 0);
       }
-    }
+    },
+    plugins: [new VuexPersistence().plugin]
   });
 
   // Configure reCaptcha

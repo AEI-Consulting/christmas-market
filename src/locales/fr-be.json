@@ -22,7 +22,7 @@
     "summary": "Vous avez commandé des produits auprès de {nbExhibitors} exposant(s), pour un total de {total} €.",
     "empty": "Vider tout le panier",
     "place-order": "Passer la commande | Passer les commandes",
-    "confirm-empty": "Êtes-vous certain(e) de vouloir vider complètement votre panier ? Il sera en effet impossible de revenir en arrière."
+    "confirm-empty": "Êtes-vous certain(e) de vouloir vider complètement votre panier ? Il sera impossible de revenir en arrière."
   },
   "language": {
     "_" : "Langue",
