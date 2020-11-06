@@ -13,7 +13,12 @@
     </div>
 
     <card-list>
-      <image-card v-for="market in filteredMarkets" :key="market.code" :text="market.name" :link="`/markets/${market.code}`" />
+      <image-card v-for="market in filteredMarkets" :key="market.code" :link="`/markets/${market.code}`">
+        <div>
+          {{market.name}}<br>
+          <small>{{market.zip}} {{market.city}}</small>
+        </div>
+      </image-card>
     </card-list>
   </Layout>
 </template>
@@ -48,7 +53,7 @@ export default {
   }),
   computed: {
     filteredMarkets() {
-      return this.$page.data.markets.filter(m => m.city.startsWith(this.searchText) || m.zip.toString().startsWith(this.searchText));
+      return this.$page.data.markets.filter(m => m.name.startsWith(this.searchText) || m.city.startsWith(this.searchText) || m.zip.toString().startsWith(this.searchText));
     }
   }
 }

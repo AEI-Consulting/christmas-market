@@ -5,7 +5,10 @@
   },
   "exhibitor": {
     "_": "Exposant | Exposant | Exposants",
-    "video": "Vidéo de présentation"
+    "website": "Site web",
+    "facebook": "Page Facebook",
+    "video": "Vidéo de présentation",
+    "discover": "Découvrez cet(te) exposant(e) dans sa vidéo de présentation !"
   },
   "product": {
     "_": "Produit | Produit | Produits",
@@ -28,5 +31,17 @@
   },
   "search": {
     "ph": "Rechercher..."
+  },
+  "payment": {
+    "_": "Moyens de paiement",
+    "cash": "Cash",
+    "online": "En ligne",
+    "banktransfer": "Virement bancaire"
+  },
+  "delivery": {
+    "_": "Moyens de livraison",
+    "pickup": "Point de collecte",
+    "postmail": "Livraison postale",
+    "store": "Boutique"
   }
 }

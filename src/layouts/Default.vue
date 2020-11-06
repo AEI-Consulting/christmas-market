@@ -69,6 +69,7 @@ body {
 
 .footer {
   text-align: right;
+  margin-top: 20px;
 }
 
 .nav__link {

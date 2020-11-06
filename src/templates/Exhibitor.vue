@@ -8,12 +8,20 @@
           <div class="presentation" v-html="exhibitor.presentation"></div>
 
           <div class="infobox">
+            <div v-if="exhibitor.payment">
+              <b-tooltip :label="$t('payment._')" position="is-left"><b-icon icon="credit-card-outline" size="is-small" /></b-tooltip>&nbsp;
+              <span v-for="(mean, i) in exhibitor.payment" :key="mean">{{ $t('payment.' + mean) }}<span v-if="i < exhibitor.payment.length - 1">, </span></span>
+            </div>
+            <div v-if="exhibitor.delivery">
+              <b-tooltip :label="$t('delivery._')" position="is-left"><b-icon icon="truck-delivery" size="is-small" /></b-tooltip>&nbsp;
+              <span v-for="(mean, i) in exhibitor.delivery" :key="mean">{{ $t('delivery.' + mean) }}<span v-if="i < exhibitor.delivery.length - 1">, </span></span>
+            </div>
             <div v-if="exhibitor.website">
-              <b-icon icon="web" size="is-small" />&nbsp;
+              <b-tooltip :label="$t('exhibitor.website')" position="is-left"><b-icon icon="web" size="is-small" /></b-tooltip>&nbsp;
               <g-link :to="exhibitor.website">{{exhibitor.website}}</g-link>
             </div>
             <div v-if="exhibitor.facebook">
-              <b-icon icon="facebook" size="is-small" />&nbsp;
+              <b-tooltip :label="$t('exhibitor.facebook')" position="is-left"><b-icon icon="facebook" size="is-small" /></b-tooltip>&nbsp;
               <g-link :to="`https://www.facebook.com/${exhibitor.facebook}`">{{exhibitor.facebook}}</g-link>
             </div>
           </div>
@@ -24,7 +32,9 @@
           <g-image v-if="exhibitor.image" :src="exhibitor.image.url" />
         </div>
         <div class="tile is-child videoBtn" v-if="exhibitor.assetVideo">
-          <b-button type="is-info" size="is-small" icon-left="movie" @click="isVideoModalActive = true">{{ $t('exhibitor.video') }}</b-button>
+          <b-tooltip :label="$t('exhibitor.discover')" position="is-bottom" multilined>
+            <b-button type="is-info" size="is-small" icon-left="movie" @click="isVideoModalActive = true">{{ $t('exhibitor.video') }}</b-button>
+          </b-tooltip>
         </div>
       </div>
     </div>
@@ -65,11 +75,13 @@ query ($code: String!) {
         }
       }
       code
+      delivery
       facebook
       image {
         url
       }
       name
+      payment
       presentation
       products {
         exhibitor {
