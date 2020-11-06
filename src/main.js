@@ -1,10 +1,10 @@
+import '~/assets/styles.scss'
+
 import Buefy from 'buefy'
 import Vuex from 'vuex'
 import { VueReCaptcha } from 'vue-recaptcha-v3'
 
 import DefaultLayout from '~/layouts/Default.vue'
-
-import 'buefy/dist/buefy.css'
 
 const numeral = require('numeral');
 

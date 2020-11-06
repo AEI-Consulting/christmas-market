@@ -39,6 +39,11 @@ export default {
 </script>
 
 <style>
+html {
+  background: linear-gradient(45deg, rgba(38,73,139,1) 0%, rgba(2,2,51,1) 100%);
+  background-attachment: fixed;
+}
+
 body {
   font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   margin:0;
@@ -48,9 +53,10 @@ body {
 
 .layout {
   max-width: 760px;
-  margin: 0 auto;
+  margin: 20px auto;
   padding-left: 20px;
   padding-right: 20px;
+  background-color: white;
 }
 
 .header {

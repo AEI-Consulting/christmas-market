@@ -1,0 +1,30 @@
+// Import Bulma's core
+@import "~bulma/sass/utilities/_all";
+
+// Set your colors
+$primary: red;
+
+// Lists and maps
+$custom-colors: null !default;
+
+// Setup $colors to use as bulma classes (e.g. 'is-twitter')
+$colors: mergeColorMaps(
+    (
+        "primary": (
+            $primary,
+            $primary-invert,
+            $primary-light,
+            $primary-dark,
+        ),
+    ),
+    $custom-colors
+);
+
+// Links
+$link: $primary;
+$link-invert: $primary-invert;
+$link-focus-border: $primary;
+
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
