@@ -40,7 +40,7 @@ export default {
 
 <style>
 html {
-  background: linear-gradient(45deg, rgba(38,73,139,1) 0%, rgba(2,2,51,1) 100%);
+  background: url('~@/assets/snow.png'), linear-gradient(45deg, rgba(38,73,139,1) 0%, rgba(2,2,51,1) 100%);
   background-attachment: fixed;
 }
 
