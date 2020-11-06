@@ -25,5 +25,8 @@
     "_" : "Langue",
     "fr-be": "Français",
     "nl-be": "Nederlands"
+  },
+  "search": {
+    "ph": "Rechercher..."
   }
 }

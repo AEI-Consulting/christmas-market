@@ -53,10 +53,6 @@ body {
   padding-right: 20px;
 }
 
-.intro p {
-  text-align: justify;
-}
-
 .header {
   display: flex;
   justify-content: space-between;

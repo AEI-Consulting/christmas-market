@@ -2,13 +2,14 @@
   <Layout>
     <h2 class="title is-2">{{ $tc('market._', 2) }}</h2>
 
-    <div class="text">
-      <p>Blablabla petit texte d'introduction</p>
-    </div>
+    <section class="intro">
+      <p>Cette section du site reprend tous les marchés de Noël du pays où les exposants qui ont rejoint cette plateforme venaient habituellement à votre rencontre. Vous pouvez directement les visiter à partir cette page en cliquant sur la vignette du marché.</p>
+    </section>
 
     <div class="search">
-      <p>Formulaire de recherche</p>
-      <p><input type="text" v-model="searchText" /></p>
+      <div>
+        <b-input :placeholder="$t('search.ph')" type="search.ph" icon="magnify" v-model="searchText"></b-input>
+      </div>
     </div>
 
     <card-list>
@@ -40,10 +41,10 @@ export default {
     ImageCard
   },
   metaInfo: {
-    title: "Markets"
+    title: 'Markets'
   },
   data: () => ({
-    searchText: ""
+    searchText: ''
   }),
   computed: {
     filteredMarkets() {
@@ -54,7 +55,16 @@ export default {
 </script>
 
 <style scoped>
+.intro p {
+  text-align: justify;
+  margin-bottom: 20px;
+}
+
 .search {
-  text-align: center;
+  text-align: right;
+}
+.search div {
+  display: inline-block;
+  width: 250px;
 }
 </style>
