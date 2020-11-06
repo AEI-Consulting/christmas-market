@@ -1,7 +1,26 @@
 {
-  "cart": "Panier",
   "about": "À propos",
-  "markets": "Marchés",
-  "exhibitors": "Exposants",
-  "products": "Produits"
+  "market": {
+    "_": "Marché | Marchés"
+  },
+  "exhibitor": {
+    "_": "Exposant | Exposants"
+  },
+  "product": {
+    "_": "Produit | Produits"
+  },
+  "no-products-yet": "Il n'y a aucun produit disponible pour le moment.",
+  "cart": {
+    "_": "Panier",
+    "is-empty": "Votre panier est actuellement vide.",
+    "summary": "Vous avez commandé des produits auprès de {nbExhibitors} exposant(s), pour un total de {total} €.",
+    "empty": "Vider tout le panier",
+    "place-order": "Passer la commande | Passer les commandes",
+    "confirm-empty": "Êtes-vous certain(e) de vouloir vider complètement votre panier ? Il sera en effet impossible de revenir en arrière."
+  },
+  "language": {
+    "_" : "Langue",
+    "fr-be": "Français",
+    "nl-be": "Nederlands"
+  }
 }

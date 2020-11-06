@@ -18,16 +18,34 @@
           </div>
         </div>
       </div>
-      <div class="tile is-parent">
+      <div class="tile is-parent is-vertical">
         <div class="tile is-child">
           <g-image v-if="$page.data.exhibitor.image" :src="$page.data.exhibitor.image.url" />
+        </div>
+        <div class="tile is-child">
+          <button @click="isVideoModalActive = true">Open video</button>
         </div>
       </div>
     </div>
 
+    <b-modal v-model="isVideoModalActive">
+      <div class="video">
+        <div v-if="$page.data.exhibitor.assetVideo.__typename === 'data_Asset'">
+          <video controls autoplay>
+            <source :src="$page.data.exhibitor.assetVideo.url">
+          </video>
+        </div>
+        <div v-else-if="$page.data.exhibitor.assetVideo.__typename === 'data_Video'" v-html="$page.data.exhibitor.assetVideo.html"></div>
+      </div>
+    </b-modal>
+
     <h3 class="title is-3">{{$t('products')}}</h3>
 
-    <card-list>
+    <div v-if="!$page.data.exhibitor.products.length">
+      <p>{{$t('no_products_yet')}}</p>
+    </div>
+
+    <card-list v-if="$page.data.exhibitor.products.length">
       <product-card v-for="product in $page.data.exhibitor.products" :key="product.id" :product="product" />
     </card-list>
   </Layout>
@@ -37,6 +55,15 @@
 query ($code: String!) {
   data {
     exhibitor(where: {code: $code}) {
+      assetVideo {
+        __typename
+        ...on data_Asset {
+          url
+        }
+        ...on data_Video {
+          html
+        }
+      }
       code
       facebook
       image {
@@ -70,6 +97,11 @@ export default {
   components: {
     CardList,
     ProductCard
+  },
+  data() {
+    return {
+        isVideoModalActive: false
+    }
   }
 }
 </script>
@@ -77,5 +109,11 @@ export default {
 <style>
 .presentation {
   margin-bottom: 20px;
+  text-align: justify;
+}
+
+.video {
+  margin: auto;
+  text-align: center;
 }
 </style>

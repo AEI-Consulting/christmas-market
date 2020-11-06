@@ -12,10 +12,7 @@
     </div>
 
     <card-list>
-      <image-card v-for="market in filteredMarkets" :key="market.code" :link="`/markets/${market.code}`">
-        {{market.name}}<br>
-        <small>{{market.zip}} {{market.city}}</small>
-      </image-card>
+      <image-card v-for="market in filteredMarkets" :key="market.code" :text="market.name" :link="`/markets/${market.code}`" />
     </card-list>
   </Layout>
 </template>

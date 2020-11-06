@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     imagePath() {
-      return this.img ? this.img.url : 'https://via.placeholder.com/150x50.png';
+      return this.img ? this.img.url : require('~/assets/no-image.png');
     }
   }
 }

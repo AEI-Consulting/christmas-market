@@ -1,6 +1,6 @@
 <template>
   <image-card :text="product.name" :link="`/exhibitors/${product.exhibitor.code}/products/${product.id}`" :img="product.image">
-    {{product.name}}<br>{{product.price}} €
+    {{product.name}}<br>{{product.price | formatNumber}} €
     <template v-if="bought > 0" v-slot:top>
       <g-link to="/cart/"><b-tag type="is-danger">{{bought}}&nbsp;<b-icon icon="cart" size="is-small"></b-icon></b-tag></g-link>
     </template>

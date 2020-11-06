@@ -6,10 +6,10 @@
       </strong>
       <nav class="nav">
         <g-link class="nav__link" :to="$tp('/about/')">
-          <b-icon icon="information" size="is-small"></b-icon>&nbsp;{{$t("about")}}
+          <b-icon icon="information" size="is-small"></b-icon>&nbsp;{{ $t('about') }}
         </g-link>
         <g-link class="nav__link" :to="$tp('/cart/')">
-          <b-icon icon="cart" size="is-small"></b-icon>&nbsp;{{$t("cart")}}&nbsp;<b-tag v-if="!$store.getters.isCartEmpty" type="is-danger">{{$store.getters.cartSize}}</b-tag>
+          <b-icon icon="cart" size="is-small"></b-icon>&nbsp;{{ $t('cart._' )}}&nbsp;<b-tag v-if="!$store.getters.isCartEmpty" type="is-danger">{{ $store.getters.cartSize }}</b-tag>
         </g-link>
       </nav>
     </header>
@@ -29,7 +29,7 @@ query {
 </static-query>
 
 <script>
-import LocaleSwitcher from "../components/LocaleSwitcher.vue"
+import LocaleSwitcher from '../components/LocaleSwitcher.vue'
 
 export default {
   components: {

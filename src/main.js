@@ -38,7 +38,7 @@ export default function (Vue, { appOptions, head }) {
       cart: []
     },
     mutations: {
-      addToCart (state, { product, quantity }) {
+      addToCart(state, { product, quantity }) {
         const item = state.cart.find(p => p.product.id === product.id);
         if (item) {
           item.quantity += quantity;
@@ -46,7 +46,7 @@ export default function (Vue, { appOptions, head }) {
           state.cart.push({ product, quantity });
         }
       },
-      emptyCart (state) {
+      emptyCart(state) {
         state.cart = [];
       }
     },
@@ -57,8 +57,8 @@ export default function (Vue, { appOptions, head }) {
       cartSize(state) {
         return state.cart.reduce((nb, p) => nb + p.quantity, 0);
       },
-      totalPrice(state) {
-        return state.cart.reduce((price, p) => price + (p.quantity * p.product.price), 0);
+      totalPrice: (state) => (code) => {
+        return state.cart.reduce((price, p) => price + (!code || (p.product.exhibitor.code === code) ? p.quantity * p.product.price : 0), 0);
       }
     }
   });

@@ -1,35 +1,47 @@
 <template>
   <Layout>
-    <h2 class="title is-2">{{ $t('cart') }}</h2>
+    <h2 class="title is-2">{{ $t('cart._') }}</h2>
 
     <div v-if="$store.getters.isCartEmpty">
-      <p>Your cart is currently empty.</p>
+      <p>{{ $t('cart.is-empty') }}</p>
     </div>
 
     <div v-else>
-      <table class="table">
-        <tr>
-          <th>Exhibitor</th>
-          <th>Product</th>
-          <th>Unit price</th>
-          <th>Quantity</th>
-          <th>Price</th>
-        </tr>
-        <tr v-for="item in $store.state.cart" :key="item.product.id">
-          <td>{{item.product.exhibitor.name}}</td>
-          <td>{{item.product.name}}</td>
-          <td>{{item.product.price | formatNumber}} €</td>
-          <td>{{item.quantity}}</td>
-          <td>{{item.quantity * item.product.price | formatNumber}} €</td>
-        </tr>
-        <tr>
-          <th colspan="4">Total</th>
-          <td>{{this.$store.getters.totalPrice | formatNumber}} €</td>
-        </tr>
-      </table>
+      <p>{{ $t('cart.summary', { nbExhibitors: nbExhibitors, total: $options.filters.formatNumber($store.getters.totalPrice()) }) }}</p>
 
-      <button @click="emptyCart">Empty cart</button>
-      <button @click="placeOrder">Order</button>
+      <b-collapse v-for="(code, i) in Object.keys(structuredCart)" :key="i" :open="isOpen == i" @open="isOpen = i" class="card orders" animation="slide">
+        <div slot="trigger" slot-scope="props" class="card-header" role="button">
+          <p class="card-header-title">{{structuredCart[code].name}}</p>
+          <a class="card-header-icon"><b-icon :icon="props.open ? 'menu-down' : 'menu-up'"></b-icon></a>
+        </div>
+        <div class="card-content">
+          <div class="content">
+            <table class="table">
+              <tr>
+                <th>Exhibitor</th>
+                <th>Product</th>
+                <th>Unit price</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+              <tr v-for="item in structuredCart[code].items" :key="item.product.id">
+                <td>{{item.product.exhibitor.name}}</td>
+                <td>{{item.product.name}}</td>
+                <td>{{item.product.price | formatNumber}} €</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.quantity * item.product.price | formatNumber}} €</td>
+              </tr>
+              <tr>
+                <th colspan="4">Total</th>
+                <td>{{$store.getters.totalPrice(code) | formatNumber}} €</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </b-collapse>
+
+      <b-button type="is-danger" @click="emptyCart">{{ $t('cart.empty' ) }}</b-button>&nbsp;
+      <b-button type="is-info" @click="placeOrder">{{ $tc('cart.place-order', nbExhibitors) }}</b-button>
     </div>
   </Layout>
 </template>
@@ -39,9 +51,36 @@ export default {
   metaInfo: {
     title: "Cart",
   },
+  data() {
+    return {
+      isOpen: 0
+    };
+  },
+  computed: {
+    nbExhibitors() {
+      return Object.keys(this.structuredCart).length;
+    },
+    structuredCart() {
+      const cart = {};
+      for (const item of this.$store.state.cart) {
+        const exhibitorId = item.product.exhibitor.code;
+        if (!(exhibitorId in cart)) {
+          cart[exhibitorId] = {
+            name: item.product.exhibitor.name,
+            items: []
+          };
+        }
+        cart[exhibitorId].items.push(item);
+      }
+      return cart;
+    }
+  },
   methods: {
     emptyCart() {
-      this.$store.commit('emptyCart');
+      this.$buefy.dialog.confirm({
+        message: this.$t('cart.confirm-empty'),
+        onConfirm: () => this.$store.commit('emptyCart')
+      })
     },
     async placeOrder() {
       await this.$recaptchaLoaded();
@@ -52,3 +91,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.orders {
+  margin: 10px 0;
+}
+</style>
