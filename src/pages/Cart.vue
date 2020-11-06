@@ -18,22 +18,22 @@
           <div class="content">
             <table class="table">
               <tr>
-                <th>Exhibitor</th>
-                <th>Product</th>
-                <th>Unit price</th>
-                <th>Quantity</th>
-                <th>Price</th>
+                <th>{{ $tc('exhibitor._') }}</th>
+                <th>{{ $tc('product._', 1) }}</th>
+                <th>{{ $t('cart.unit-price') }}</th>
+                <th>{{ $t('cart.quantity') }}</th>
+                <th>{{ $t('cart.price') }}</th>
               </tr>
               <tr v-for="item in structuredCart[code].items" :key="item.product.id">
-                <td>{{item.product.exhibitor.name}}</td>
-                <td>{{item.product.name}}</td>
-                <td>{{item.product.price | formatNumber}} €</td>
-                <td>{{item.quantity}}</td>
-                <td>{{item.quantity * item.product.price | formatNumber}} €</td>
+                <td>{{ item.product.exhibitor.name }}</td>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.product.price | formatNumber }} €</td>
+                <td><b-numberinput type="is-info" size="is-small" controls-position="compact" controls-rounded min="1" v-model="item.quantity" class="nbInput"></b-numberinput></td>
+                <td>{{ item.quantity * item.product.price | formatNumber }} €</td>
               </tr>
               <tr>
-                <th colspan="4">Total</th>
-                <td>{{$store.getters.totalPrice(code) | formatNumber}} €</td>
+                <th colspan="4">{{ $t('cart.total') }}</th>
+                <td>{{ $store.getters.totalPrice(code) | formatNumber }} €</td>
               </tr>
             </table>
           </div>
@@ -95,5 +95,9 @@ export default {
 <style scoped>
 .orders {
   margin: 10px 0;
+}
+
+.nbInput {
+  max-width: 120px;
 }
 </style>

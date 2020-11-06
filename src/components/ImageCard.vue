@@ -38,7 +38,6 @@ export default {
 <style scoped>
 .card {
   width: 100%;
-  height: 210px;
   border: 1px solid #ccc;
 }
 
