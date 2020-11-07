@@ -1,11 +1,13 @@
 <template>
-  <Layout>
-    <h2 class="title is-2">{{ $tc('exhibitor._', 2) }}</h2>
+  <MainPageLayout :title="$tc('exhibitor._', 2)" :data="data" :searchFields="['name']">
+    <template v-slot:presentation>
+      <p>Cette section du site ...</p>
+    </template>
 
-    <card-list>
-      <image-card v-for="exhibitor in $page.data.exhibitors" :key="exhibitor.code" :text="exhibitor.name" :link="`/exhibitors/${exhibitor.code}`" :img="exhibitor.image" />
-    </card-list>
-  </Layout>
+    <template v-slot:items="{object}">
+      {{object.name}}
+    </template>
+  </MainPageLayout>
 </template>
 
 <page-query>
@@ -23,16 +25,19 @@ query {
 </page-query>
 
 <script>
-import CardList from '~/components/CardList.vue'
-import ImageCard from '~/components/ImageCard.vue'
-
 export default {
-  components: {
-    CardList,
-    ImageCard
-  },
   metaInfo: {
     title: 'Exhibitors'
+  },
+  computed: {
+    data() {
+      return this.$page.data.exhibitors.map(e => ({
+        key: e.code,
+        link: `/exhibitors/${e.code}`,
+        img: e.image,
+        object: e
+      }));
+    }
   }
 }
 </script>

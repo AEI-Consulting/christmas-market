@@ -6,11 +6,13 @@ import VuexPersistence from 'vuex-persist'
 import { VueReCaptcha } from 'vue-recaptcha-v3'
 
 import DefaultLayout from '~/layouts/Default.vue'
+import MainPageLayout from '~/layouts/MainPage.vue'
 
 const numeral = require('numeral');
 
 export default function (Vue, { appOptions, head }) {
   Vue.component('Layout', DefaultLayout);
+  Vue.component('MainPageLayout', MainPageLayout);
 
   // Configure the Buefy UI components framework
   Vue.use(Buefy);
