@@ -1,9 +1,9 @@
 <template>
   <Layout>
-    <h2 class="title is-2">{{$page.data.market.name}}</h2>
+    <h2 class="title is-2">{{market.name}}</h2>
 
     <card-list>
-      <image-card v-for="exhibitor in orderedExhibitors" :key="exhibitor.code" :text="exhibitor.name" :link="`/exhibitors/${exhibitor.code}`" />
+      <image-card v-for="exhibitor in orderedExhibitors" :key="exhibitor.code" :text="exhibitor.name" :link="`/exhibitors/${exhibitor.code}`" :img="exhibitor.image" />
     </card-list>
   </Layout>
 </template>
@@ -15,6 +15,9 @@ query ($code: String!) {
       name
       exhibitors {
         code
+        image {
+          url
+        }
         name
       }
     }
@@ -32,8 +35,11 @@ export default {
     ImageCard
   },
   computed: {
+    market() {
+      return this.$page.data.market;
+    },
     orderedExhibitors() {
-      return this.$page.data.market.exhibitors.sort((a, b) => (a.name < b.name ? -1 : 1));
+      return this.market.exhibitors.sort((a, b) => (a.name < b.name ? -1 : 1));
     }
   }
 }
