@@ -8,11 +8,11 @@
           <div class="presentation" v-html="exhibitor.presentation"></div>
 
           <div class="infobox">
-            <div v-if="exhibitor.payment">
+            <div v-if="exhibitor.payment && exhibitor.payment.length">
               <b-tooltip :label="$t('payment._')" position="is-left"><b-icon icon="credit-card-outline" size="is-small" /></b-tooltip>&nbsp;
               <span v-for="(mean, i) in exhibitor.payment" :key="mean">{{ $t('payment.' + mean) }}<span v-if="i < exhibitor.payment.length - 1">, </span></span>
             </div>
-            <div v-if="exhibitor.delivery">
+            <div v-if="exhibitor.delivery && exhibitor.delivery.length">
               <b-tooltip :label="$t('delivery._')" position="is-left"><b-icon icon="truck-delivery" size="is-small" /></b-tooltip>&nbsp;
               <span v-for="(mean, i) in exhibitor.delivery" :key="mean">{{ $t('delivery.' + mean) }}<span v-if="i < exhibitor.delivery.length - 1">, </span></span>
             </div>
