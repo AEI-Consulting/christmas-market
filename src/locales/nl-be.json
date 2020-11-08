@@ -1,3 +1,11 @@
 {
-    "about": "Over ons"
+    "about": "Over ons",
+    "cart": {
+      "_": "Winkelwagen"
+    },
+    "language": {
+      "_" : "Taal",
+      "fr-be": "Français",
+      "nl-be": "Nederlands"
+    }
   }

@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <h2 class="title is-2">{{$t('about')}}</h2>
+    <h2 class="title is-2">{{ $t('about') }}</h2>
 
     <p>We are two guys.</p>
   </Layout>
