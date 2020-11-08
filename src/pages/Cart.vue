@@ -9,7 +9,7 @@
     <div v-else>
       <p>{{ $t('cart.summary', { nbExhibitors: nbExhibitors, total: $options.filters.formatNumber($store.getters.totalPrice()) }) }}</p>
 
-      <b-collapse v-for="(code, i) in Object.keys(structuredCart)" :key="i" :open="isOpen === i" @open="isOpen = i" class="card orders" animation="slide">
+      <b-collapse v-for="(code, i) in Object.keys(structuredCart).sort()" :key="i" :open="isOpen === i" @open="isOpen = i" class="card orders" animation="slide">
         <div slot="trigger" slot-scope="props" class="card-header" role="button">
           <p class="card-header-title">{{structuredCart[code].name}}</p>
           <a class="card-header-icon"><b-icon :icon="props.open ? 'menu-down' : 'menu-up'"></b-icon></a>
@@ -22,16 +22,19 @@
                 <th>{{ $t('cart.unit-price') }}</th>
                 <th>{{ $t('cart.quantity') }}</th>
                 <th>{{ $t('cart.price') }}</th>
+                <th></th>
               </tr>
               <tr v-for="item in structuredCart[code].items" :key="item.product.id">
                 <td>{{ item.product.name }}</td>
                 <td>{{ item.product.price | formatNumber }} €</td>
                 <td><b-numberinput type="is-info" size="is-small" controls-position="compact" controls-rounded min="1" v-model="item.quantity" class="nbInput"></b-numberinput></td>
                 <td>{{ item.quantity * item.product.price | formatNumber }} €</td>
+                <td><b-button class="deleteBtn" type="is-info" size="is-small" icon-left="delete" outlined rounded @click.prevent="remove(item.product)"></b-button></td>
               </tr>
               <tr>
                 <th colspan="3">{{ $t('cart.total') }}</th>
                 <td>{{ $store.getters.totalPrice(code) | formatNumber }} €</td>
+                <td></td>
               </tr>
             </table>
           </div>
@@ -74,6 +77,9 @@ export default {
     }
   },
   methods: {
+    remove(product) {
+      this.$store.commit('removeFromCart', { product });
+    },
     emptyCart() {
       this.$buefy.dialog.confirm({
         message: this.$t('cart.confirm-empty'),

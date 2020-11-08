@@ -49,6 +49,12 @@ export default function (Vue, { appOptions, head }) {
           state.cart.push({ product, quantity });
         }
       },
+      removeFromCart(state, { product }) {
+        const i = state.cart.findIndex(p => p.product.id === product.id);
+        if (i >= 0) {
+          state.cart.splice(i, 1);
+        }
+      },
       emptyCart(state) {
         state.cart = [];
       }
