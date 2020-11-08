@@ -2,7 +2,7 @@ import '~/assets/styles.scss'
 
 import Buefy from 'buefy'
 import Vuex from 'vuex'
-import VuexPersistence from 'vuex-persist'
+import VuexPersist from 'vuex-persist'
 import { VueReCaptcha } from 'vue-recaptcha-v3'
 
 import DefaultLayout from '~/layouts/Default.vue'
@@ -36,10 +36,9 @@ export default function (Vue, { appOptions, head }) {
 
   // Configure the Vuex store
   Vue.use(Vuex);
+  console.log(localStorage.getItem('vuex-persist'));
   appOptions.store = new Vuex.Store({
-    state: {
-      cart: []
-    },
+    state: localStorage.getItem('vuex-persist') ? JSON.parse(localStorage.getItem('vuex-persist')) : { cart: [] },
     mutations: {
       addToCart(state, { product, quantity }) {
         const item = state.cart.find(p => p.product.id === product.id);
@@ -48,21 +47,25 @@ export default function (Vue, { appOptions, head }) {
         } else {
           state.cart.push({ product, quantity });
         }
+        localStorage.setItem('vuex-persist', JSON.stringify(state));
       },
       updateCart(state, { product, quantity }) {
         const item = state.cart.find(p => p.product.id === product.id);
         if (item) {
           item.quantity = quantity;
         }
+        localStorage.setItem('vuex-persist', JSON.stringify(state));
       },
       removeFromCart(state, { product }) {
         const i = state.cart.findIndex(p => p.product.id === product.id);
         if (i >= 0) {
           state.cart.splice(i, 1);
         }
+        localStorage.setItem('vuex-persist', JSON.stringify(state));
       },
       emptyCart(state) {
         state.cart = [];
+        localStorage.setItem('vuex-persist', JSON.stringify(state));
       }
     },
     getters: {
@@ -75,8 +78,8 @@ export default function (Vue, { appOptions, head }) {
       totalPrice: (state) => (code) => {
         return state.cart.reduce((price, p) => price + (!code || (p.product.exhibitor.code === code) ? p.quantity * p.product.price : 0), 0);
       }
-    },
-    plugins: [new VuexPersistence().plugin]
+    }/*,
+    plugins: [new VuexPersist().plugin]*/
   });
 
   // Configure reCaptcha
