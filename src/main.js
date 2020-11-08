@@ -70,7 +70,7 @@ export default function (Vue, { appOptions, head }) {
         return state.cart.reduce((price, p) => price + (!code || (p.product.exhibitor.code === code) ? p.quantity * p.product.price : 0), 0);
       }
     },
-    plugins: [createPersistedState()]
+    plugins: process.isClient ? [createPersistedState()] : []
   });
 
   // Configure reCaptcha
