@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <Layout v-if="$store">
     <h2 class="title is-2">{{ $t('cart._') }}</h2>
 
     <div v-if="$store.getters.isCartEmpty">

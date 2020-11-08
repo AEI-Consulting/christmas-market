@@ -4,7 +4,7 @@
       {{product.name}}<br>
       <small>{{product.price | formatNumber}} €</small>
     </div>
-    <template v-if="bought > 0" v-slot:top>
+    <template v-if="$store && bought > 0" v-slot:top>
       <g-link to="/cart/"><b-tag type="is-danger">{{bought}}&nbsp;<b-icon icon="cart" size="is-small"></b-icon></b-tag></g-link>
     </template>
     <template v-slot:end>

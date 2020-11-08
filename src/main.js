@@ -35,52 +35,54 @@ export default function (Vue, { appOptions, head }) {
   })
 
   // Configure the Vuex store
-  Vue.use(Vuex);
-  console.log(localStorage.getItem('vuex-persist'));
-  appOptions.store = new Vuex.Store({
-    state: localStorage.getItem('vuex-persist') ? JSON.parse(localStorage.getItem('vuex-persist')) : { cart: [] },
-    mutations: {
-      addToCart(state, { product, quantity }) {
-        const item = state.cart.find(p => p.product.id === product.id);
-        if (item) {
-          item.quantity += quantity;
-        } else {
-          state.cart.push({ product, quantity });
+  if (process.isClient) {
+    Vue.use(Vuex);
+    console.log(localStorage.getItem('vuex-persist'));
+    appOptions.store = new Vuex.Store({
+      state: localStorage.getItem('vuex-persist') ? JSON.parse(localStorage.getItem('vuex-persist')) : { cart: [] },
+      mutations: {
+        addToCart(state, { product, quantity }) {
+          const item = state.cart.find(p => p.product.id === product.id);
+          if (item) {
+            item.quantity += quantity;
+          } else {
+            state.cart.push({ product, quantity });
+          }
+          localStorage.setItem('vuex-persist', JSON.stringify(state));
+        },
+        updateCart(state, { product, quantity }) {
+          const item = state.cart.find(p => p.product.id === product.id);
+          if (item) {
+            item.quantity = quantity;
+          }
+          localStorage.setItem('vuex-persist', JSON.stringify(state));
+        },
+        removeFromCart(state, { product }) {
+          const i = state.cart.findIndex(p => p.product.id === product.id);
+          if (i >= 0) {
+            state.cart.splice(i, 1);
+          }
+          localStorage.setItem('vuex-persist', JSON.stringify(state));
+        },
+        emptyCart(state) {
+          state.cart = [];
+          localStorage.setItem('vuex-persist', JSON.stringify(state));
         }
-        localStorage.setItem('vuex-persist', JSON.stringify(state));
       },
-      updateCart(state, { product, quantity }) {
-        const item = state.cart.find(p => p.product.id === product.id);
-        if (item) {
-          item.quantity = quantity;
+      getters: {
+        isCartEmpty(state) {
+          return state.cart.length === 0;
+        },
+        cartSize(state) {
+          return state.cart.reduce((nb, p) => nb + p.quantity, 0);
+        },
+        totalPrice: (state) => (code) => {
+          return state.cart.reduce((price, p) => price + (!code || (p.product.exhibitor.code === code) ? p.quantity * p.product.price : 0), 0);
         }
-        localStorage.setItem('vuex-persist', JSON.stringify(state));
-      },
-      removeFromCart(state, { product }) {
-        const i = state.cart.findIndex(p => p.product.id === product.id);
-        if (i >= 0) {
-          state.cart.splice(i, 1);
-        }
-        localStorage.setItem('vuex-persist', JSON.stringify(state));
-      },
-      emptyCart(state) {
-        state.cart = [];
-        localStorage.setItem('vuex-persist', JSON.stringify(state));
-      }
-    },
-    getters: {
-      isCartEmpty(state) {
-        return state.cart.length === 0;
-      },
-      cartSize(state) {
-        return state.cart.reduce((nb, p) => nb + p.quantity, 0);
-      },
-      totalPrice: (state) => (code) => {
-        return state.cart.reduce((price, p) => price + (!code || (p.product.exhibitor.code === code) ? p.quantity * p.product.price : 0), 0);
-      }
-    }/*,
-    plugins: [new VuexPersist().plugin]*/
-  });
+      }/*,
+      plugins: [new VuexPersist().plugin]*/
+    });
+  }
 
   // Configure reCaptcha
   Vue.use(VueReCaptcha, { siteKey: '6LfrR98ZAAAAANtPm1ARhN5aql1uXVFcQOd6bjWg' })
