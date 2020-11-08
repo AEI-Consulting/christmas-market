@@ -27,7 +27,7 @@
               <tr v-for="item in structuredCart[code].items" :key="item.product.id">
                 <td>{{ item.product.name }}</td>
                 <td>{{ item.product.price | formatNumber }} €</td>
-                <td><b-numberinput type="is-info" size="is-small" controls-position="compact" controls-rounded min="1" v-model="item.quantity" class="nbInput"></b-numberinput></td>
+                <td><b-numberinput type="is-info" size="is-small" controls-position="compact" controls-rounded min="1" :value="item.quantity" @input="changeQuantity($event, item.product)" class="nbInput"></b-numberinput></td>
                 <td>{{ item.quantity * item.product.price | formatNumber }} €</td>
                 <td><b-button class="deleteBtn" type="is-info" size="is-small" icon-left="delete" outlined rounded @click.prevent="remove(item.product)"></b-button></td>
               </tr>
@@ -79,6 +79,9 @@ export default {
   methods: {
     remove(product) {
       this.$store.commit('removeFromCart', { product });
+    },
+    changeQuantity(value, product) {
+      this.$store.commit('updateCart', { product, quantity: value });
     },
     emptyCart() {
       this.$buefy.dialog.confirm({

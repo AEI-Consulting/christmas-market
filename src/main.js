@@ -2,7 +2,7 @@ import '~/assets/styles.scss'
 
 import Buefy from 'buefy'
 import Vuex from 'vuex'
-import createPersistedState  from 'vuex-persistedstate'
+import VuexPersistence from 'vuex-persist'
 import { VueReCaptcha } from 'vue-recaptcha-v3'
 
 import DefaultLayout from '~/layouts/Default.vue'
@@ -49,6 +49,12 @@ export default function (Vue, { appOptions, head }) {
           state.cart.push({ product, quantity });
         }
       },
+      updateCart(state, { product, quantity }) {
+        const item = state.cart.find(p => p.product.id === product.id);
+        if (item) {
+          item.quantity = quantity;
+        }
+      },
       removeFromCart(state, { product }) {
         const i = state.cart.findIndex(p => p.product.id === product.id);
         if (i >= 0) {
@@ -70,7 +76,7 @@ export default function (Vue, { appOptions, head }) {
         return state.cart.reduce((price, p) => price + (!code || (p.product.exhibitor.code === code) ? p.quantity * p.product.price : 0), 0);
       }
     },
-    plugins: process.isClient ? [createPersistedState()] : []
+    plugins: [new VuexPersistence().plugin]
   });
 
   // Configure reCaptcha
