@@ -15,10 +15,13 @@
 query {
   data {
     markets {
+      city
       code
+      image {
+        url
+      }
       name
       zip
-      city
     }
   }
 }
@@ -34,6 +37,7 @@ export default {
       return this.$page.data.markets.map(m => ({
         key: m.code,
         link: `/markets/${m.code}`,
+        img: m.image,
         object: m
       }));
     }

@@ -26,7 +26,8 @@
     "unit-price": "Prix unitaire",
     "quantity": "Quantité",
     "price": "Prix",
-    "total": "Total"
+    "total": "Total",
+    "options": "Options"
   },
   "language": {
     "_" : "Langue",
@@ -37,13 +38,15 @@
     "ph": "Rechercher..."
   },
   "payment": {
-    "_": "Moyens de paiement",
+    "_": "Paiement",
+    "means": "Moyens de paiement",
     "cash": "Cash",
     "online": "En ligne",
     "banktransfer": "Virement bancaire"
   },
   "delivery": {
-    "_": "Moyens de livraison",
+    "_": "Livraison",
+    "means": "Moyens de livraison",
     "pickup": "Point de collecte",
     "postmail": "Livraison postale",
     "store": "Boutique"
