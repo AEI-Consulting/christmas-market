@@ -35,11 +35,24 @@ export default function (Vue, { appOptions, head }) {
 
   // Configure the Vuex store
   Vue.use(Vuex);
+
+  const vuexPersist = store => {
+    store.subscribe((mutation, state) => {
+      localStorage.setItem('vuex', JSON.stringify(state.cart));
+    })
+  }
+
   appOptions.store = new Vuex.Store({
     state: {
       cart: []
     },
     mutations: {
+      loadCart(state) {
+        const cache = localStorage.getItem('vuex');
+        if (cache) {
+          state.cart = JSON.parse(cache);
+        }
+      },
       addToCart(state, { product, quantity }) {
         const item = state.cart.find(p => p.product.id === product.id);
         if (item) {
@@ -74,7 +87,8 @@ export default function (Vue, { appOptions, head }) {
       totalPrice: (state) => (code) => {
         return state.cart.reduce((price, p) => price + (!code || (p.product.exhibitor.code === code) ? p.quantity * p.product.price : 0), 0);
       }
-    }
+    },
+    plugins: [vuexPersist]
   });
 
   // Configure reCaptcha
