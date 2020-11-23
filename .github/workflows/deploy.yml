@@ -20,6 +20,11 @@ jobs:
       uses: CultureHQ/actions-yarn@v1.0.1
     - run: yarn --frozen-lockfile
     - run: AUTH_TOKEN=${{ secrets.GRAPH_CMS_TOKEN }} yarn build
+    - name: Create CNAME file
+      uses: finnp/create-file-action@master
+      env:
+        FILE_NAME: "dist/CNAME"
+        FILE_DATA: "www.christmas-market.be"
     - name: Deploy to GitHub Pages
       if: success()
       uses: crazy-max/ghaction-github-pages@v2
@@ -28,8 +33,3 @@ jobs:
         build_dir: dist
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Create CNAME file
-      uses: finnp/create-file-action@master
-      env:
-        FILE_NAME: "CNAME"
-        FILE_DATA: "www.christmas-market.be"
