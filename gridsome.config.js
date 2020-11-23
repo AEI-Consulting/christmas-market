@@ -1,7 +1,7 @@
 module.exports = {
   siteName: "Christmas Market",
-  siteUrl: "https://AEI-Consulting.github.io",
-  pathPrefix: "/christmas-market",
+  siteUrl: "https://www.christmas-market.be",
+  pathPrefix: "/",
   plugins: [{
     use: "@gridsome/source-graphql",
     options: {
