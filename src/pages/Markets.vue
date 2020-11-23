@@ -1,7 +1,7 @@
 <template>
   <MainPageLayout :title="$tc('market._', 2)" :data="data" :searchFields="['name', 'zip', 'city']">
     <template v-slot:presentation>
-      <p>Retrouvez ici tous vos marchés de Noël préférés ou découvrez-en simplement de nouveaux ! Cette page vous donne accès aux exposants ayant rejoint cette plateforme et qui venaient habituellement à votre rencontre, lors des marchés de Noël. Vous pouvez directement les visiter à partir cette page, en cliquant sur la vignette du marché ou en effectuant une recherche.</p>
+      <p>Retrouvez ici tous vos marchés de Noël préférés ou découvrez-en simplement de nouveaux ! Cette page vous donne accès aux marchés de Noël pour lesquels des exposant(e)s, qui venaient habituellement à votre rencontre sur ces marchés, ont rejoint cette plateforme. Vous pouvez directement les visiter à partir cette page, en cliquant sur la vignette du marché ou en effectuant une recherche.</p>
     </template>
 
     <template v-slot:items="{object}">

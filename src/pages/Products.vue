@@ -1,7 +1,7 @@
 <template>
-  <MainPageLayout :title="$tc('exhibitor._', 2)" cardType="product-card" :data="data" :searchFields="['name']">
+  <MainPageLayout :title="$tc('product._', 2)" cardType="product-card" :data="data" :searchFields="['name']">
     <template v-slot:presentation>
-      <p>Cette section du site reprend tous les produits disponibles dans tous les marchés de Noël du pays repris sur cette plateforme. Vous pouvez directement les ajouter à votre panier ou en lire le descriptif en cliquant sur la vignette du produit.</p>
+      <p>Retrouvez ici tous les produits dont vous rêvez pour un cadeau de Noël ou un usage personnel, ou découvrez-en des nouveaux ! Cette page vous donne accès à tous les produits mis en vente par les exposant(e)s qui ont rejoint cette plateforme. Vous pouvez directement les retrouver à partir cette page, en cliquant sur la vignette du produit ou en effectuant une recherche.</p>
     </template>
   </MainPageLayout>
 </template>

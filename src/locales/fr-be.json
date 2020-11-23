@@ -52,5 +52,9 @@
     "pickup": "Point de collecte",
     "postmail": "Livraison postale",
     "store": "Boutique"
+  },
+  "footer": {
+    "navigation": "Navigation",
+    "user-manual": "Mode d'emploi"
   }
 }

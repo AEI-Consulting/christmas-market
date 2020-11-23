@@ -17,7 +17,24 @@
       <slot/>
     </section>
     <footer class="footer">
-      <locale-switcher/>
+      <div class="columns">
+        <div class="column">
+          <div class="title">{{ $t('footer.navigation') }}</div>
+          <ul>
+            <li><g-link :to="$tp('/markets/')">{{ $tc('market._', 2) }}</g-link></li>
+            <li><g-link :to="$tp('/exhibitors/')">{{ $tc('exhibitor._', 2) }}</g-link></li>
+            <li><g-link :to="$tp('/products/')">{{ $tc('product._', 2) }}</g-link></li>
+          </ul>
+        </div>
+        <div class="column">
+          <div class="title">{{ $t('footer.user-manual') }}</div>
+        </div>
+        <div class="column">
+        </div>
+        <div class="column language">
+          <locale-switcher/>
+        </div>
+      </div>
     </footer>
   </div>
 </template>
@@ -73,10 +90,23 @@ body {
 }
 
 .footer {
-  text-align: right;
   margin-top: 40px;
   background-color: #272727;
-  color: white;
+  color: #ccc;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+.footer a {
+  color: #ccc;
+}
+.footer .title {
+  color: #ccc;
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.footer .language {
+  text-align: right;
 }
 
 .nav__link {
