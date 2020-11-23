@@ -13,7 +13,9 @@
         </g-link>
       </nav>
     </header>
-    <slot/>
+    <section class="body">
+      <slot/>
+    </section>
     <footer class="footer">
       <locale-switcher/>
     </footer>
@@ -47,9 +49,7 @@ body {
 }
 
 .layout {
-  margin: 20px auto;
-  padding-left: 150px;
-  padding-right: 150px;
+  margin: 0px;
   background-color: white;
 }
 
@@ -58,12 +58,25 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  height: 80px;
+  height: 50px;
+  padding: 0 25px;
+  background-color: #272727;
+}
+
+.header a {
+  color: #82a6e6;
+}
+
+.body {
+  min-height: 65vh;
+  margin: 0 150px;
 }
 
 .footer {
   text-align: right;
-  margin-top: 20px;
+  margin-top: 40px;
+  background-color: #272727;
+  color: white;
 }
 
 .nav__link {

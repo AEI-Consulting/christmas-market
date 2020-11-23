@@ -60,7 +60,7 @@ export default {
         }
 
         for (const field of this.searchFields) {
-          if (e.object[field] && e.object[field].toString().startsWith(this.searchText)) {
+          if (e.object[field] && e.object[field].toString().toLowerCase().includes(this.searchText.toLowerCase())) {
             return true;
           }
         }
@@ -71,8 +71,8 @@ export default {
 }
 </script>
 
-<style scoped>
-.presentation p {
+<style>
+.presentation > p {
   text-align: justify;
   margin-bottom: 20px;
 }
@@ -82,6 +82,6 @@ export default {
 }
 .searchBox div {
   display: inline-block;
-  width: 250px;
+  width: 350px;
 }
 </style>
