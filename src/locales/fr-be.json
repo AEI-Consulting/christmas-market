@@ -5,10 +5,11 @@
   },
   "exhibitor": {
     "_": "Exposant | Exposant | Exposants",
-    "website": "Site web",
+    "discover": "Découvrez cet(te) exposant(e) dans sa vidéo de présentation !",
+    "email": "Adresse e-mail",
     "facebook": "Page Facebook",
     "video": "Vidéo de présentation",
-    "discover": "Découvrez cet(te) exposant(e) dans sa vidéo de présentation !"
+    "website": "Site web"
   },
   "product": {
     "_": "Produit | Produit | Produits",
@@ -46,6 +47,7 @@
   },
   "delivery": {
     "_": "Livraison",
+    "delivery": "Livraison à domicile",
     "means": "Moyens de livraison",
     "pickup": "Point de collecte",
     "postmail": "Livraison postale",

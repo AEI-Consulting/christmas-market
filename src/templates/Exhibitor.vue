@@ -16,6 +16,10 @@
               <b-tooltip :label="$t('delivery.means')" position="is-left"><b-icon icon="truck-delivery" size="is-small" /></b-tooltip>&nbsp;
               <span v-for="(mean, i) in exhibitor.delivery" :key="mean">{{ $t('delivery.' + mean) }}<span v-if="i < exhibitor.delivery.length - 1">, </span></span>
             </div>
+            <div v-if="exhibitor.email">
+              <b-tooltip :label="$t('exhibitor.email')" position="is-left"><b-icon icon="email" size="is-small" /></b-tooltip>&nbsp;
+              <g-link :to="`mailto:${exhibitor.email}`">{{exhibitor.email}}</g-link>
+            </div>
             <div v-if="exhibitor.website">
               <b-tooltip :label="$t('exhibitor.website')" position="is-left"><b-icon icon="web" size="is-small" /></b-tooltip>&nbsp;
               <g-link :to="exhibitor.website">{{exhibitor.website}}</g-link>
@@ -39,6 +43,8 @@
       </div>
     </div>
 
+    <div v-if="exhibitor.promotion" class="content promotion" v-html="exhibitor.promotion"></div>
+
     <b-modal v-if="exhibitor.assetVideo" v-model="isVideoModalActive">
       <div class="video">
         <div v-if="exhibitor.assetVideo.__typename === 'data_Asset'">
@@ -53,7 +59,7 @@
     <h3 class="title is-3">{{ $tc('product._', nbProducts) }}</h3>
 
     <card-list v-if="exhibitor.products.length">
-      <product-card v-for="product in exhibitor.products" :key="product.id" :product="product" />
+      <product-card v-for="product in products" :key="product.id" :product="product" />
     </card-list>
     <div v-else>
       <p>{{ $t('product.no') }}</p>
@@ -76,6 +82,7 @@ query ($code: String!) {
       }
       code
       delivery
+      email
       facebook
       image {
         url
@@ -95,6 +102,7 @@ query ($code: String!) {
         name
         price
       }
+      promotion
       website
     }
   }
@@ -113,6 +121,9 @@ export default {
   computed: {
     exhibitor() {
       return this.$page.data.exhibitor;
+    },
+    products() {
+      return this.exhibitor.products.sort((a, b) => (a.name > b.name) ? 1 : -1);
     },
     nbProducts() {
       return this.exhibitor.products ? this.exhibitor.products.length : 0;
@@ -143,5 +154,12 @@ export default {
 .video {
   margin: auto;
   text-align: center;
+}
+
+.promotion {
+  border: 1px dashed #c2a609;
+  border-radius: 10px;
+  background-color: #fefcf3;
+  padding: 10px;
 }
 </style>

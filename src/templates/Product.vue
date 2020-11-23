@@ -90,7 +90,7 @@ export default {
   text-align: center;
 }
 .productImg img {
-  max-width: 100px;
+  max-height: 250px;
   object-fit: contain;
 }
 </style>
