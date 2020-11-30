@@ -38,19 +38,25 @@ export default function (Vue, { appOptions, head }) {
 
   const vuexPersist = store => {
     store.subscribe((mutation, state) => {
-      localStorage.setItem('vuex', JSON.stringify(state.cart));
+      localStorage.setItem('vuex', JSON.stringify({
+        cart: state.cart,
+        cartOptions: state.cartOptions
+      }));
     })
   }
 
   appOptions.store = new Vuex.Store({
     state: {
-      cart: []
+      cart: [],
+      cartOptions: {}
     },
     mutations: {
       loadCart(state) {
         const cache = localStorage.getItem('vuex');
         if (cache) {
-          state.cart = JSON.parse(cache);
+          const cachedState = JSON.parse(cache);
+          state.cart = cachedState.cart || {};
+          state.cartOptions = cachedState.cartOptions || {};
         }
       },
       addToCart(state, { product, quantity }) {
@@ -75,6 +81,9 @@ export default function (Vue, { appOptions, head }) {
       },
       emptyCart(state) {
         state.cart = [];
+      },
+      updateCartOptions(state, { code, options }) {
+        state.cartOptions[code] = options;
       }
     },
     getters: {

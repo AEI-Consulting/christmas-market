@@ -1,5 +1,10 @@
 {
-  "about": "À propos",
+  "about": {
+    "_": "À propos",
+    "user-manual": "Mode d'emploi",
+    "terms-use": "Conditions d'utilisation",
+    "privacy": "Vie privée"
+  },
   "market": {
     "_": "Marché | Marché | Marchés"
   },
@@ -55,6 +60,6 @@
   },
   "footer": {
     "navigation": "Navigation",
-    "user-manual": "Mode d'emploi"
+    "documents": "Documents"
   }
 }

@@ -6,7 +6,7 @@
       </strong>
       <nav class="nav">
         <g-link class="nav__link" :to="$tp('/about/')">
-          <b-icon icon="information" size="is-small"></b-icon>&nbsp;{{ $t('about') }}
+          <b-icon icon="information" size="is-small"></b-icon>&nbsp;{{ $t('about._') }}
         </g-link>
         <g-link class="nav__link" :to="$tp('/cart/')">
           <b-icon icon="cart" size="is-small"></b-icon>&nbsp;{{ $t('cart._' )}}&nbsp;<b-tag v-if="!$store.getters.isCartEmpty" type="is-danger">{{ $store.getters.cartSize }}</b-tag>
@@ -27,7 +27,12 @@
           </ul>
         </div>
         <div class="column">
-          <div class="title">{{ $t('footer.user-manual') }}</div>
+          <div class="title">{{ $t('footer.documents') }}</div>
+          <ul>
+            <li><g-link :to="$tp('/about/howto/')">{{ $tc('about.user-manual', 2) }}</g-link></li>
+            <li><g-link :to="$tp('/about/conditions/')">{{ $tc('about.terms-use', 2) }}</g-link></li>
+            <li><g-link :to="$tp('/about/privacy/')">{{ $tc('about.privacy', 2) }}</g-link></li>
+          </ul>
         </div>
         <div class="column">
         </div>
@@ -63,6 +68,11 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.5;
+}
+
+p {
+  text-align: justify;
+  margin-bottom: 10px;
 }
 
 .layout {

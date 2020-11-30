@@ -9,70 +9,11 @@
     <div v-else>
       <p>{{ $t('cart.summary', { nbExhibitors: nbExhibitors, total: $options.filters.formatNumber($store.getters.totalPrice()) }) }}</p>
 
-      <b-collapse v-for="(code, i) in Object.keys(structuredCart).sort()" :key="i" :open="isOpen === i" @open="isOpen = i" class="card orders" animation="slide">
-        <div slot="trigger" slot-scope="props" class="card-header" role="button">
-          <p class="card-header-title">{{ i + 1 }}. {{ structuredCart[code].name }}&nbsp;<small>({{ $store.getters.totalPrice(code) | formatNumber }} €)</small></p>
-          <a class="card-header-icon"><b-icon :icon="props.open ? 'menu-down' : 'menu-up'"></b-icon></a>
-        </div>
-        <div class="card-content">
-          <div class="content">
-            <table class="table">
-              <tr>
-                <th>{{ $tc('product._', 1) }}</th>
-                <th>{{ $t('cart.unit-price') }}</th>
-                <th>{{ $t('cart.quantity') }}</th>
-                <th>{{ $t('cart.price') }}</th>
-                <th></th>
-              </tr>
-              <tr v-for="item in structuredCart[code].items" :key="item.product.id">
-                <td>{{ item.product.name }}</td>
-                <td>{{ item.product.price | formatNumber }} €</td>
-                <td><b-numberinput type="is-info" size="is-small" controls-position="compact" controls-rounded :editable="false" min="1" :value="item.quantity" @input="changeQuantity($event, item.product)" class="nbInput"></b-numberinput></td>
-                <td>{{ item.quantity * item.product.price | formatNumber }} €</td>
-                <td><b-button class="deleteBtn" type="is-info" size="is-small" icon-left="delete" outlined rounded @click.prevent="remove(item.product)"></b-button></td>
-              </tr>
-              <tr>
-                <th colspan="3">{{ $t('cart.total') }}</th>
-                <td>{{ $store.getters.totalPrice(code) | formatNumber }} €</td>
-                <td></td>
-              </tr>
-            </table>
-            <div>
-              <h4 class="title is-4">{{ $t('cart.options') }}</h4>
-
-              <div class="columns">
-                <div class="column is-one-fifth">
-                  <b-icon icon="credit-card-outline" size="is-small" />&nbsp;{{ $t('payment._') }}
-                </div>
-                <div class="column is-two-fifth">
-                  <b-select expanded v-model="paymentMeans[i]">
-                    <option v-for="paymentMean of exhibitors[code].payment" :key="paymentMean" :value="paymentMean">{{ $t('payment.' + paymentMean ) }}</option>
-                  </b-select>
-                </div>
-                <div class="column is-two-fifth">
-                </div>
-              </div>
-
-              <div class="columns">
-                <div class="column is-one-fifth">
-                  <b-icon icon="truck-delivery" size="is-small" />&nbsp;{{ $t('delivery._') }}
-                </div>
-                <div class="column is-two-fifth">
-                  <b-select expanded v-model="deliveryMeans[i]">
-                    <option v-for="deliveryMean of exhibitors[code].delivery" :key="deliveryMean" :value="deliveryMean">{{ $t('delivery.' + deliveryMean ) }}</option>
-                  </b-select>
-                </div>
-                <div class="column is-two-fifth">
-                  <b-select v-if="deliveryMeans[i] === 'pickup'" expanded>
-                    <option v-for="(address, j) of exhibitors[code].pickUpRelay" :key="j">{{ address }}</option>
-                  </b-select>
-                  <b-input v-if="deliveryMeans[i] === 'postmail'" icon="map-marker"></b-input>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </b-collapse>
+      <cart-part v-for="(code, i) in Object.keys(structuredCart).sort()" :key="code" :open="opened === i" @open="opened = i" :exhibitor="exhibitors[code]" :exhibitorCart="structuredCart[code]">
+        <template v-slot:title>
+          <p>{{ i + 1 }}. {{ structuredCart[code].name }}&nbsp;<small>({{ $store.getters.totalPrice(code) | formatNumber }} €)</small></p>
+        </template>
+      </cart-part>
 
       <div class="actions">
         <b-button type="is-danger" size="is-small" @click="emptyCart">{{ $t('cart.empty' ) }}</b-button>&nbsp;
@@ -97,15 +38,18 @@ query {
 </page-query>
 
 <script>
+import axios from 'axios'
+
+import CartPart from '~/components/CartPart.vue'
+
 export default {
+  components: { CartPart },
   metaInfo: {
     title: "Cart",
   },
   data() {
     return {
-      isOpen: -1,
-      paymentMeans: [],
-      deliveryMeans: []
+      opened: -1
     };
   },
   computed: {
@@ -135,12 +79,6 @@ export default {
     }
   },
   methods: {
-    remove(product) {
-      this.$store.commit('removeFromCart', { product });
-    },
-    changeQuantity(value, product) {
-      this.$store.commit('updateCart', { product, quantity: value });
-    },
     emptyCart() {
       this.$buefy.dialog.confirm({
         message: this.$t('cart.confirm-empty'),
@@ -151,7 +89,34 @@ export default {
       await this.$recaptchaLoaded();
 
       const token = await this.$recaptcha('Order');
-      console.log(token)
+      try {
+        const response = await axios.post('https://api.christmas-market.be/placeorder', {
+          token,
+          cart: JSON.stringify(this.structuredCart),
+          options: this.$store.state.cartOptions
+        })
+        this.$buefy.dialog.alert({
+          title: 'Commande envoyée',
+          message: 'Votre commande a été envoyée à l\'exposant(e) concerné(e), il(elle) vous contactera prochainement pour la finaliser.',
+          type: 'is-success',
+          hasIcon: true,
+          icon: 'information',
+          ariaRole: 'alertdialog',
+          ariaModal: true
+        })
+      } catch (error) {
+        this.$buefy.dialog.alert({
+          title: 'Erreur',
+          message: 'Une erreur s\'est produite et votre commande n\'a pas été envoyée, veuillez réessayer plus tard.',
+          type: 'is-danger',
+          hasIcon: true,
+          icon: 'alert-circle',
+          ariaRole: 'alertdialog',
+          ariaModal: true
+        })
+      } finally {
+
+      }
     }
   },
 };
