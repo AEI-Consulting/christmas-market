@@ -81,6 +81,7 @@ export default function (Vue, { appOptions, head }) {
       },
       emptyCart(state) {
         state.cart = [];
+        state.cartOptions = {};
       },
       updateCartOptions(state, { code, options }) {
         state.cartOptions[code] = options;

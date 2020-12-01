@@ -49,7 +49,7 @@
                 <b-select expanded v-model="options.delivery.mean">
                   <option v-for="deliveryMean of exhibitor.delivery" :key="deliveryMean" :value="deliveryMean">{{ $t('delivery.' + deliveryMean ) }}</option>
                 </b-select>
-                <p>Blabla</p>
+                <p v-if="options.delivery.mean === 'delivery' && exhibitor.deliveryCondition"><i>{{exhibitor.deliveryCondition}}</i></p>
               </div>
               <div class="column is-two-fifth">
                 <b-select v-if="options.delivery.mean === 'pickup'" expanded v-model="options.delivery.pickupLocation">

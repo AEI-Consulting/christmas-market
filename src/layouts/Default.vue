@@ -29,8 +29,8 @@
         <div class="column">
           <div class="title">{{ $t('footer.documents') }}</div>
           <ul>
-            <li><g-link :to="$tp('/about/howto/')">{{ $tc('about.user-manual', 2) }}</g-link></li>
-            <li><g-link :to="$tp('/about/conditions/')">{{ $tc('about.terms-use', 2) }}</g-link></li>
+            <li><g-link :to="$tp('/about/how-to/')">{{ $tc('about.user-manual', 2) }}</g-link></li>
+            <li><g-link :to="$tp('/about/terms-of-use/')">{{ $tc('about.terms-use', 2) }}</g-link></li>
             <li><g-link :to="$tp('/about/privacy/')">{{ $tc('about.privacy', 2) }}</g-link></li>
           </ul>
         </div>

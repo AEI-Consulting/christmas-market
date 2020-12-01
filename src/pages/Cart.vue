@@ -17,8 +17,40 @@
 
       <div class="actions">
         <b-button type="is-danger" size="is-small" @click="emptyCart">{{ $t('cart.empty' ) }}</b-button>&nbsp;
-        <b-button type="is-info" size="is-small" @click="placeOrder">{{ $tc('cart.place-order', nbExhibitors) }}</b-button>
+        <b-button type="is-info" size="is-small" @click="confirmOrder">{{ $tc('cart.place-order', nbExhibitors) }}</b-button>
       </div>
+
+      <b-modal v-model="isConfirmDialogOpen" has-modal-card trap-focus :destroy-on-hide="false" aria-role="dialog" aria-modal>
+        <template #default="{close}">
+          <form action="">
+            <div class="modal-card" style="width: auto">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Confirmation commande</p>
+                <button type="button" class="delete" @click="close"/>
+              </header>
+              <section class="modal-card-body">
+                <p>Les montants indiqués dans votre panier sont indicatifs et ne comprennent pas les éventuelles réductions proposées par les exposant(e)s, ni les éventuels frais d'envoi, en cas de livraison postale. Le prix définitif vous sera communiqué par l'exposant(e).</p>
+                <b-field label="Nom">
+                  <b-input type="text" v-model="customer.name" placeholder="Votre nom" required></b-input>
+                </b-field>
+                <b-field label="Email">
+                  <b-input type="email" v-model="customer.email" placeholder="Votre adresse e-mail" required></b-input>
+                </b-field>
+                <b-field label="Téléphone/GSM (optionnel)">
+                  <b-input type="email" v-model="customer.phone" placeholder="Votre numéro de téléphone"></b-input>
+                </b-field>
+              </section>
+              <footer class="modal-card-foot">
+                <div v-if="!placingOrder" class="actions">
+                  <b-button type="is-danger" size="is-small" @click="close">Annuler</b-button>
+                  <b-button type="is-info" size="is-small" @click="placeOrder">Envoyer la commande</b-button>
+                </div>
+                <div v-else>Envoi de la commande en cours...</div>
+              </footer>
+            </div>
+          </form>
+        </template>
+        </b-modal>
     </div>
   </Layout>
 </template>
@@ -29,6 +61,7 @@ query {
     exhibitors {
       code
       delivery
+      deliveryCondition
       payment
       pickUpRelay
       store
@@ -45,11 +78,18 @@ import CartPart from '~/components/CartPart.vue'
 export default {
   components: { CartPart },
   metaInfo: {
-    title: "Cart",
+    title: 'Cart',
   },
   data() {
     return {
-      opened: -1
+      opened: -1,
+      isConfirmDialogOpen: false,
+      placingOrder: false,
+      customer: {
+        name: '',
+        email: '',
+        phone: ''
+      }
     };
   },
   computed: {
@@ -85,15 +125,71 @@ export default {
         onConfirm: () => this.$store.commit('emptyCart')
       })
     },
-    async placeOrder() {
-      await this.$recaptchaLoaded();
+    confirmOrder() {
+      let valid = true;
 
+      // Check whether the payment and delivery option are selected
+      for (const exhibitor of Object.keys(this.structuredCart)) {
+        const cartOptions = this.$store.state.cartOptions[exhibitor];
+        if (!cartOptions || !cartOptions.payment || !cartOptions.payment.mean || !cartOptions.delivery || !cartOptions.delivery.mean) {
+          valid = false;
+          break;
+        }
+
+        // Check whether details are completed
+        switch (cartOptions.delivery.mean) {
+          case 'delivery':
+          case 'postmail':
+            if (!cartOptions.delivery.address) {
+              valid = false;
+            }
+            break;
+
+          case 'pickup':
+            if (!cartOptions.delivery.pickupLocation) {
+              valid = false;
+            }
+            break;
+
+          case 'store':
+            if (!cartOptions.delivery.selectedStore) {
+              valid = false;
+            }
+            break;
+        }
+      }
+
+      if (valid) {
+        this.isConfirmDialogOpen = true;
+      } else {
+        this.$buefy.toast.open({
+          duration: 5000,
+          message: 'Les moyens de paiement et de livraison ne sont pas définis pour tous les exposant(e)s.',
+          position: 'is-top',
+          type: 'is-danger'
+        });
+      }
+    },
+    async placeOrder() {
+      if (!this.customer || !this.customer.name || !this.customer.email) {
+        this.$buefy.toast.open({
+          duration: 5000,
+          message: 'Vous devez au moins renseigner votre nom et votre adresse e-mail.',
+          position: 'is-top',
+          type: 'is-danger'
+        });
+        return;
+      }
+
+      this.placingOrder = true;
+      await this.$recaptchaLoaded();
       const token = await this.$recaptcha('Order');
       try {
         const response = await axios.post('https://api.christmas-market.be/placeorder', {
           token,
           cart: JSON.stringify(this.structuredCart),
-          options: this.$store.state.cartOptions
+          options: this.$store.state.cartOptions,
+          customer: this.customer
         })
         this.$buefy.dialog.alert({
           title: 'Commande envoyée',
@@ -104,7 +200,7 @@ export default {
           ariaRole: 'alertdialog',
           ariaModal: true
         })
-      } catch (error) {
+      } catch (err) {
         this.$buefy.dialog.alert({
           title: 'Erreur',
           message: 'Une erreur s\'est produite et votre commande n\'a pas été envoyée, veuillez réessayer plus tard.',
@@ -115,7 +211,8 @@ export default {
           ariaModal: true
         })
       } finally {
-
+        this.placingOrder = false;
+        this.isConfirmDialogOpen = false;
       }
     }
   },

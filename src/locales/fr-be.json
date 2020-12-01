@@ -48,7 +48,8 @@
     "means": "Moyens de paiement",
     "cash": "Cash",
     "online": "En ligne",
-    "banktransfer": "Virement bancaire"
+    "banktransfer": "Virement bancaire",
+    "bancontact": "Bancontact"
   },
   "delivery": {
     "_": "Livraison",
