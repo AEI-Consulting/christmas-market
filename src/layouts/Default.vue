@@ -91,7 +91,7 @@ p {
 }
 
 .header a {
-  color: #82a6e6;
+  color: #ccc;
 }
 
 .body {

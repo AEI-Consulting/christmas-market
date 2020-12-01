@@ -1,13 +1,13 @@
 <template>
-  <g-link class="card nav__link" :to="$tp(link)">
-    <div>{{name}}</div>
+  <div class="homecard">
     <g-image :src="require(`@/assets/${img}`)" />
-  </g-link>
+    <b-button tag="router-link" type="is-link is-light" :to="link">{{name}}</b-button>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "SectionCard",
+  name: 'SectionCard',
   props: {
     img: String,
     name: String,
@@ -17,23 +17,14 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  border: 1px solid #aaa;
-  width: 237px;
-  height: 160px;
-  margin: 0;
-  text-decoration: none;
+.homecard {
+  margin: auto;
   text-align: center;
   font-size: 1.5rem;
-  color: black;
 }
 
-.card:hover {
-  box-shadow: 1px 1px 2px 1px #ccc;
-}
-
-.card img {
-  height: 80px;
+.homecard img {
+  height: 120px;
   margin: 15px 0;
 }
 </style>
