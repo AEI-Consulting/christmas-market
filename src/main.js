@@ -55,7 +55,7 @@ export default function (Vue, { appOptions, head }) {
         const cache = localStorage.getItem('vuex');
         if (cache) {
           const cachedState = JSON.parse(cache);
-          state.cart = cachedState.cart || {};
+          state.cart = cachedState.cart || [];
           state.cartOptions = cachedState.cartOptions || {};
         }
       },
