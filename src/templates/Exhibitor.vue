@@ -36,7 +36,7 @@
           <g-image v-if="exhibitor.image" :src="exhibitor.image.url" />
         </div>
         <div class="tile is-child videoBtn">
-          <b-tooltip v-if="exhibitor.pictures" :label="$t('exhibitor.discover.pictures')" position="is-bottom" multilined>
+          <b-tooltip v-if="exhibitor.pictures && exhibitor.pictures.length" :label="$t('exhibitor.discover.pictures')" position="is-bottom" multilined>
             <b-button type="is-info" size="is-small" icon-left="image-multiple" @click="isPicturesModalActive = true">{{ $t('exhibitor.pictures') }}</b-button>
           </b-tooltip>
           &nbsp;
@@ -49,7 +49,7 @@
 
     <div v-if="exhibitor.promotion" class="content promotion" v-html="exhibitor.promotion"></div>
 
-    <b-modal v-if="exhibitor.pictures" v-model="isPicturesModalActive">
+    <b-modal v-if="exhibitor.pictures && exhibitor.pictures.length" v-model="isPicturesModalActive">
       <b-carousel :indicator-inside="false" class="picturesCarousel">
         <b-carousel-item v-for="(item, i) in exhibitor.pictures.length" :key="i" class="bigPicture">
           <span class="image">
