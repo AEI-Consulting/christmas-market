@@ -12,7 +12,7 @@
     <div class="tile is-ancestor">
       <div class="tile is-parent is-8">
         <div class="tile is-child">
-          <div class="presentation" v-html="exhibitor.presentation"></div>
+          <div class="presentation content" v-html="exhibitor.presentation"></div>
 
           <div class="infobox">
             <div v-if="exhibitor.payment && exhibitor.payment.length">
