@@ -96,7 +96,22 @@ p {
 
 .body {
   min-height: 65vh;
-  margin: 0 150px;
+}
+
+@media (min-width:800px) {
+  .body {
+    margin: 0 150px;
+  }
+}
+@media (min-width:400px) and (max-width: 800px) {
+  .body {
+    margin: 0 50px;
+  }
+}
+@media (max-width:400px) {
+  .body {
+    margin: 0 20px;
+  }
 }
 
 .footer {
