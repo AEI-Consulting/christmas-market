@@ -10,10 +10,14 @@
   },
   "exhibitor": {
     "_": "Exposant | Exposant | Exposants",
-    "discover": "Découvrez cet(te) exposant(e) dans sa vidéo de présentation !",
+    "discover": {
+      "pictures": "Découvrez cet(te) exposant(e) grâce à ses photos !",
+      "video": "Découvrez cet(te) exposant(e) dans sa vidéo de présentation !"
+    },
     "email": "Adresse e-mail",
     "facebook": "Page Facebook",
-    "video": "Vidéo de présentation",
+    "pictures": "Photos",
+    "video": "Vidéo",
     "website": "Site web"
   },
   "product": {
@@ -53,8 +57,8 @@
   },
   "delivery": {
     "_": "Livraison",
-    "delivery": "Livraison à domicile",
     "means": "Moyens de livraison",
+    "delivery": "Livraison à domicile",
     "pickup": "Point de collecte",
     "postmail": "Livraison postale",
     "store": "Boutique"

@@ -29,7 +29,10 @@
                 <button type="button" class="delete" @click="close"/>
               </header>
               <section class="modal-card-body">
-                <p>Les montants indiqués dans votre panier sont indicatifs et ne comprennent pas les éventuelles réductions proposées par les exposant(e)s, ni les éventuels frais d'envoi, en cas de livraison postale. Le prix définitif vous sera communiqué par l'exposant(e).</p>
+                <b-notification type="is-info is-light" icon="information" :has-icon="true" :closable="false">
+                  <p>Les montants indiqués dans votre panier sont indicatifs et ne comprennent ni les éventuelles réductions proposées par les exposant(e)s, ni les éventuels frais d'envoi en cas de livraison postale. Hormis ces derniers, les prix définitifs que vous devrez payer ne seront pas plus élevés que ceux mentionnés dans votre panier.</p>
+                  <p>Après vérification des stocks, les exposant(e)s prendront contact avec vous, en vous notifiant notamment des prix finaux. Vous serez évidemment libre d'accepter ou refuser la(les) commande(s) à ce moment là.</p>
+                </b-notification>
                 <b-field label="Nom">
                   <b-input type="text" v-model="customer.name" placeholder="Votre nom" required></b-input>
                 </b-field>
@@ -39,6 +42,7 @@
                 <b-field label="Téléphone/GSM (optionnel)">
                   <b-input type="email" v-model="customer.phone" placeholder="Votre numéro de téléphone"></b-input>
                 </b-field>
+                <b-checkbox v-model="conditionsAccepted">J'ai bien compris les conditions reprises ci-dessus</b-checkbox>
               </section>
               <footer class="modal-card-foot">
                 <div v-if="!placingOrder" class="actions">
@@ -85,6 +89,7 @@ export default {
       opened: -1,
       isConfirmDialogOpen: false,
       placingOrder: false,
+      conditionsAccepted: false,
       customer: {
         name: '',
         email: '',
@@ -175,6 +180,16 @@ export default {
         this.$buefy.toast.open({
           duration: 5000,
           message: 'Vous devez au moins renseigner votre nom et votre adresse e-mail.',
+          position: 'is-top',
+          type: 'is-danger'
+        });
+        return;
+      }
+
+      if (!this.conditionsAccepted) {
+        this.$buefy.toast.open({
+          duration: 5000,
+          message: 'Vous devez accepter les conditions pour pouvoir envoyer votre(vos) commande(s) aux exposant(e)s.',
           position: 'is-top',
           type: 'is-danger'
         });

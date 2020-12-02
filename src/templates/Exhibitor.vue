@@ -35,8 +35,12 @@
         <div class="tile is-child">
           <g-image v-if="exhibitor.image" :src="exhibitor.image.url" />
         </div>
-        <div class="tile is-child videoBtn" v-if="exhibitor.assetVideo">
-          <b-tooltip :label="$t('exhibitor.discover')" position="is-bottom" multilined>
+        <div class="tile is-child videoBtn">
+          <b-tooltip v-if="exhibitor.pictures" :label="$t('exhibitor.discover.pictures')" position="is-bottom" multilined>
+            <b-button type="is-info" size="is-small" icon-left="image-multiple" @click="isPicturesModalActive = true">{{ $t('exhibitor.pictures') }}</b-button>
+          </b-tooltip>
+          &nbsp;
+          <b-tooltip v-if="exhibitor.assetVideo" :label="$t('exhibitor.discover.video')" position="is-bottom" multilined>
             <b-button type="is-info" size="is-small" icon-left="movie" @click="isVideoModalActive = true">{{ $t('exhibitor.video') }}</b-button>
           </b-tooltip>
         </div>
@@ -44,6 +48,21 @@
     </div>
 
     <div v-if="exhibitor.promotion" class="content promotion" v-html="exhibitor.promotion"></div>
+
+    <b-modal v-if="exhibitor.pictures" v-model="isPicturesModalActive">
+      <b-carousel :indicator-inside="false" class="picturesCarousel">
+        <b-carousel-item v-for="(item, i) in exhibitor.pictures.length" :key="i" class="bigPicture">
+          <span class="image">
+            <img :src="exhibitor.pictures[i].url">
+          </span>
+        </b-carousel-item>
+        <template slot="indicators" slot-scope="props">
+          <span class="al image">
+            <img class="thumbPicture" :src="exhibitor.pictures[props.i].url" :title="props.i">
+          </span>
+        </template>
+      </b-carousel>
+    </b-modal>
 
     <b-modal v-if="exhibitor.assetVideo" v-model="isVideoModalActive">
       <div class="video">
@@ -89,6 +108,9 @@ query ($code: String!) {
       }
       name
       payment
+      pictures {
+        url
+      }
       presentation
       products {
         exhibitor {
@@ -131,7 +153,8 @@ export default {
   },
   data() {
     return {
-        isVideoModalActive: false
+      isPicturesModalActive: false,
+      isVideoModalActive: false
     }
   }
 }
@@ -146,6 +169,22 @@ export default {
 .infobox {
   border-left: 3px solid #999;
   padding-left: 10px;
+}
+
+.picturesCarousel {
+  background-color: #111;
+}
+.bigPicture {
+  background-color: black;
+  padding: 15px;
+}
+.bigPicture img {
+  max-height: 500px;
+  object-fit: contain;
+}
+.thumbPicture {
+  max-height: 50px;
+  object-fit: contain;
 }
 
 .videoBtn {

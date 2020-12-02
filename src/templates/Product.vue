@@ -1,5 +1,13 @@
 <template>
   <Layout>
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><g-link to="/">Accueil</g-link></li>
+        <li><g-link :to="$tp(`/exhibitors/${product.exhibitor.code}`)">{{ product.exhibitor.name }}</g-link></li>
+        <li class="is-active"><a href="#">{{ product.name }}</a></li>
+      </ul>
+    </nav>
+
     <h2 class="title is-2">{{ product.name }}</h2>
 
     <div class="tile is-ancestor">
