@@ -1,5 +1,12 @@
 <template>
   <Layout>
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><g-link to="/">Accueil</g-link></li>
+        <li class="is-active"><a href="#">{{ exhibitor.name }}</a></li>
+      </ul>
+    </nav>
+
     <h2 class="title is-2">{{ exhibitor.name }}</h2>
 
     <div class="tile is-ancestor">
@@ -27,6 +34,10 @@
             <div v-if="exhibitor.facebook">
               <b-tooltip :label="$t('exhibitor.facebook')" position="is-left"><b-icon icon="facebook" size="is-small" /></b-tooltip>&nbsp;
               <g-link :to="`https://www.facebook.com/${exhibitor.facebook}`">{{exhibitor.facebook}}</g-link>
+            </div>
+            <div v-if="exhibitor.instagram">
+              <b-tooltip :label="$t('exhibitor.instagram')" position="is-left"><b-icon icon="instagram" size="is-small" /></b-tooltip>&nbsp;
+              <g-link :to="`https://www.instagram.com/${exhibitor.instagram}`">{{exhibitor.instagram}}</g-link>
             </div>
           </div>
         </div>
@@ -106,6 +117,7 @@ query ($code: String!) {
       image {
         url
       }
+      instagram
       name
       payment
       pictures {
