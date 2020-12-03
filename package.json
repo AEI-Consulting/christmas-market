@@ -14,6 +14,7 @@
     "buefy": "^0.9.4",
     "gh-pages": "^3.1.0",
     "gridsome": "^0.7.0",
+    "gridsome-plugin-gtag": "^0.1.10",
     "gridsome-plugin-i18n": "^1.6.0",
     "numeral": "^2.0.6",
     "vue-recaptcha-v3": "^1.9.0",

@@ -4420,6 +4420,13 @@ graphql@^14.4.2:
   dependencies:
     iterall "^1.2.2"
 
+gridsome-plugin-gtag@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/gridsome-plugin-gtag/-/gridsome-plugin-gtag-0.1.10.tgz#99ab1b494a874a996b08ee7073766c8132614d59"
+  integrity sha512-/T1snhRRO4akDx6Hi4rYpMtXo8jo8uEf0brHbOI6bbb+vg7XTFucEAOKklUdKFTLKFAwH1VIQ+AZajU88U6iHg==
+  dependencies:
+    vue-gtag "^1.10.0"
+
 gridsome-plugin-i18n@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/gridsome-plugin-i18n/-/gridsome-plugin-i18n-1.6.0.tgz#6bb1456fa60a1be856a7bd0a04bea41f753db3e0"
@@ -9084,6 +9091,11 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
+
+vue-gtag@^1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/vue-gtag/-/vue-gtag-1.10.0.tgz#787d62eb4f1135dfa2997b465f1b11e5cf8fb0c9"
+  integrity sha512-pGbe6m/12a2DHftnWQOHBmkS+a3kPAZNU6ouP426mF/MPc/43DcHCEySUtB3MeJCPuXaUQQgGsRosIZWPdl/MQ==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
