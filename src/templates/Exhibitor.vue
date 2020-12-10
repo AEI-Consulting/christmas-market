@@ -51,11 +51,15 @@
           <g-image v-if="exhibitor.image" :src="exhibitor.image.url" />
         </div>
         <div class="tile is-child videoBtn">
-          <b-tooltip v-if="exhibitor.pictures && exhibitor.pictures.length" :label="$t('exhibitor.discover.pictures')" position="is-bottom" multilined>
+          <b-tooltip v-if="exhibitor.story" :label="$t('exhibitor.discover.story')" position="is-bottom">
+            <b-button type="is-info" size="is-small" icon-left="book-open-variant" @click="isStoryModalActive = true">{{ $t('exhibitor.details') }}</b-button>
+          </b-tooltip>
+          &nbsp;
+          <b-tooltip v-if="exhibitor.pictures && exhibitor.pictures.length" :label="$t('exhibitor.discover.pictures')" position="is-bottom">
             <b-button type="is-info" size="is-small" icon-left="image-multiple" @click="isPicturesModalActive = true">{{ $t('exhibitor.pictures') }}</b-button>
           </b-tooltip>
           &nbsp;
-          <b-tooltip v-if="exhibitor.assetVideo" :label="$t('exhibitor.discover.video')" position="is-bottom" multilined>
+          <b-tooltip v-if="exhibitor.assetVideo" :label="$t('exhibitor.discover.video')" position="is-bottom">
             <b-button type="is-info" size="is-small" icon-left="movie" @click="isVideoModalActive = true">{{ $t('exhibitor.video') }}</b-button>
           </b-tooltip>
         </div>
@@ -63,6 +67,12 @@
     </div>
 
     <div v-if="exhibitor.promotion" class="content promotion" v-html="exhibitor.promotion"></div>
+
+    <b-modal v-if="exhibitor.story" v-model="isStoryModalActive">
+      <b-message>
+        <div class="content" v-html="exhibitor.story"></div>
+      </b-message>
+    </b-modal>
 
     <b-modal v-if="exhibitor.pictures && exhibitor.pictures.length" v-model="isPicturesModalActive">
       <b-carousel :indicator-inside="false" class="picturesCarousel">
@@ -142,6 +152,7 @@ query ($code: String!) {
         price
       }
       promotion
+      story
       website
     }
   }
@@ -170,6 +181,7 @@ export default {
   },
   data() {
     return {
+      isStoryModalActive: false,
       isPicturesModalActive: false,
       isVideoModalActive: false
     }

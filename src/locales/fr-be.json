@@ -11,12 +11,15 @@
   "exhibitor": {
     "_": "Exposant | Exposant | Exposants",
     "discover": {
+      "story": "Lisez en plus sur cet(te) exposant(e).",
       "pictures": "Découvrez cet(te) exposant(e) grâce à ses photos !",
       "video": "Découvrez cet(te) exposant(e) dans sa vidéo de présentation !"
     },
     "email": "Adresse e-mail",
+    "phone": "Téléphone",
     "facebook": "Page Facebook",
     "instagram": "Page Instagram",
+    "details": "Détails",
     "pictures": "Photos",
     "video": "Vidéo",
     "website": "Site web"
