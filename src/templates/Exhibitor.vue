@@ -27,6 +27,10 @@
               <b-tooltip :label="$t('exhibitor.email')" position="is-left"><b-icon icon="email" size="is-small" /></b-tooltip>&nbsp;
               <g-link :to="`mailto:${exhibitor.email}`">{{exhibitor.email}}</g-link>
             </div>
+            <div v-if="exhibitor.phone">
+              <b-tooltip :label="$t('exhibitor.phone')" position="is-left"><b-icon icon="phone" size="is-small" /></b-tooltip>&nbsp;
+              <span>{{exhibitor.phone}}</span>
+            </div>
             <div v-if="exhibitor.website">
               <b-tooltip :label="$t('exhibitor.website')" position="is-left"><b-icon icon="web" size="is-small" /></b-tooltip>&nbsp;
               <g-link :to="exhibitor.website">{{exhibitor.website}}</g-link>
@@ -120,6 +124,7 @@ query ($code: String!) {
       instagram
       name
       payment
+      phone
       pictures {
         url
       }
