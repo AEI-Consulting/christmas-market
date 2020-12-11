@@ -30,6 +30,11 @@ import CardList from '~/components/CardList.vue'
 import ImageCard from '~/components/ImageCard.vue'
 
 export default {
+  metaInfo(vm) {
+    return {
+      title: vm.$context.title
+    }
+  },
   components: {
     CardList,
     ImageCard

@@ -15,23 +15,27 @@ module.exports = function (api) {
       data {
         markets {
           code
+          name
         }
         exhibitors {
           code
+          name
           products {
             id
+            name
           }
         }
       }
     }`)
 
-    data.data.markets.forEach(({ code, locale }) => {
+    data.data.markets.forEach(({ code, name, locale }) => {
       createPage({
         path: `/markets/${code}`,
         component: './src/templates/Market.vue',
         context: {
           code,
-          locale
+          locale,
+          title: name
         },
         route: {
           meta: {
@@ -41,13 +45,14 @@ module.exports = function (api) {
       })
     })
 
-    data.data.exhibitors.forEach(({ code, products, locale }) => {
+    data.data.exhibitors.forEach(({ code, name, products, locale }) => {
       createPage({
         path: `/exhibitors/${code}`,
         component: './src/templates/Exhibitor.vue',
         context: {
           code,
-          locale
+          locale,
+          title: name
         },
         route: {
           meta: {
@@ -56,13 +61,14 @@ module.exports = function (api) {
         }
       })
 
-      products.forEach(({ id, locale }) => {
+      products.forEach(({ id, locale, name: productName }) => {
         createPage({
           path: `/exhibitors/${code}/products/${id}`,
           component: './src/templates/Product.vue',
           context: {
             id,
-            locale
+            locale,
+            title: productName + ' par ' + name
           },
           route: {
             meta: {

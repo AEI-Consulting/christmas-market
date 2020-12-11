@@ -176,6 +176,11 @@ import CardList from '~/components/CardList.vue'
 import ProductCard from '~/components/ProductCard.vue'
 
 export default {
+  metaInfo(vm) {
+    return {
+      title: vm.$context.title
+    }
+  },
   components: {
     CardList,
     ProductCard

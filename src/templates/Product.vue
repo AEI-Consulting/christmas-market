@@ -67,6 +67,11 @@ query ($id: ID!) {
 
 <script>
 export default {
+  metaInfo(vm) {
+    return {
+      title: vm.$context.title
+    }
+  },
   computed: {
     product() {
       return this.$page.data.product;
