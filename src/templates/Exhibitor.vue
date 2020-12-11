@@ -21,27 +21,37 @@
             </div>
             <div v-if="exhibitor.delivery && exhibitor.delivery.length">
               <b-tooltip :label="$t('delivery.means')" position="is-left"><b-icon icon="truck-delivery" size="is-small" /></b-tooltip>&nbsp;
-              <span v-for="(mean, i) in exhibitor.delivery" :key="mean">{{ $t('delivery.' + mean) }}<span v-if="i < exhibitor.delivery.length - 1">, </span></span>
+              <span v-for="(mean, i) in exhibitor.delivery" :key="mean">
+                <b-tooltip v-if="mean === 'pickup'" position="is-bottom" size="is-large" dashed multilined>
+                  {{ $t('delivery.' + mean) }}
+                  <template v-slot:content><div v-html="pickupLocations" class="content"></div></template>
+                </b-tooltip>
+                <b-tooltip v-else-if="mean === 'store'" position="is-bottom" size="is-large" dashed multilined>
+                  {{ $t('delivery.' + mean) }}
+                  <template v-slot:content><div v-html="storeLocations" class="content"></div></template>
+                </b-tooltip>
+                <span v-else>{{ $t('delivery.' + mean) }}</span>
+              <span v-if="i < exhibitor.delivery.length - 1">, </span></span>
             </div>
             <div v-if="exhibitor.email">
               <b-tooltip :label="$t('exhibitor.email')" position="is-left"><b-icon icon="email" size="is-small" /></b-tooltip>&nbsp;
-              <g-link :to="`mailto:${exhibitor.email}`">{{exhibitor.email}}</g-link>
+              <g-link :to="`mailto:${exhibitor.email}`">{{ exhibitor.email }}</g-link>
             </div>
             <div v-if="exhibitor.phone">
               <b-tooltip :label="$t('exhibitor.phone')" position="is-left"><b-icon icon="phone" size="is-small" /></b-tooltip>&nbsp;
-              <span>{{exhibitor.phone}}</span>
+              <span>{{ exhibitor.phone }}</span>
             </div>
             <div v-if="exhibitor.website">
               <b-tooltip :label="$t('exhibitor.website')" position="is-left"><b-icon icon="web" size="is-small" /></b-tooltip>&nbsp;
-              <g-link :to="exhibitor.website">{{exhibitor.website}}</g-link>
+              <g-link :to="exhibitor.website">{{ exhibitor.website }}</g-link>
             </div>
             <div v-if="exhibitor.facebook">
               <b-tooltip :label="$t('exhibitor.facebook')" position="is-left"><b-icon icon="facebook" size="is-small" /></b-tooltip>&nbsp;
-              <g-link :to="`https://www.facebook.com/${exhibitor.facebook}`">{{exhibitor.facebook}}</g-link>
+              <g-link :to="`https://www.facebook.com/${exhibitor.facebook}`">{{ exhibitor.facebook }}</g-link>
             </div>
             <div v-if="exhibitor.instagram">
               <b-tooltip :label="$t('exhibitor.instagram')" position="is-left"><b-icon icon="instagram" size="is-small" /></b-tooltip>&nbsp;
-              <g-link :to="`https://www.instagram.com/${exhibitor.instagram}`">{{exhibitor.instagram}}</g-link>
+              <g-link :to="`https://www.instagram.com/${exhibitor.instagram}`">{{ exhibitor.instagram }}</g-link>
             </div>
           </div>
         </div>
@@ -135,6 +145,7 @@ query ($code: String!) {
       name
       payment
       phone
+      pickUpRelay
       pictures {
         url
       }
@@ -152,6 +163,7 @@ query ($code: String!) {
         price
       }
       promotion
+      store
       story
       website
     }
@@ -177,6 +189,28 @@ export default {
     },
     nbProducts() {
       return this.exhibitor.products ? this.exhibitor.products.length : 0;
+    },
+    pickupLocations() {
+      let pickupLocations = '';
+      if (this.exhibitor.pickUpRelay && this.exhibitor.pickUpRelay.length) {
+        pickupLocations += '<ul>';
+        for (const location of this.exhibitor.pickUpRelay) {
+          pickupLocations += '<li>' + location + '</li>';
+        }
+        pickupLocations += '</ul>';
+      }
+      return pickupLocations;
+    },
+    storeLocations() {
+      let storeLocations = '';
+      if (this.exhibitor.store && this.exhibitor.store.length) {
+        storeLocations += '<ul>';
+        for (const location of this.exhibitor.store) {
+          storeLocations += '<li>' + location + '</li>';
+        }
+        storeLocations += '</ul>';
+      }
+      return storeLocations;
     }
   },
   data() {
