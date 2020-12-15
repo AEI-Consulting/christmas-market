@@ -215,6 +215,7 @@ export default {
           ariaRole: 'alertdialog',
           ariaModal: true
         })
+        this.$store.commit('emptyCart')
       } catch (err) {
         this.$buefy.dialog.alert({
           title: 'Erreur',

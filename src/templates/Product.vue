@@ -31,12 +31,32 @@
           </div>
         </div>
       </div>
-      <div class="tile is-parent">
+      <div class="tile is-parent is-vertical">
         <div class="tile is-child productImg">
           <g-image v-if="product.image" :src="product.image.url" />
         </div>
+        <div class="tile is-child videoBtn">
+          <b-tooltip v-if="product.pictures && product.pictures.length" :label="$t('product.discover.pictures')" position="is-bottom">
+            <b-button type="is-info" size="is-small" icon-left="image-multiple" @click="isPicturesModalActive = true">{{ $t('product.pictures') }}</b-button>
+          </b-tooltip>
+        </div>
       </div>
     </div>
+
+    <b-modal v-if="product.pictures && product.pictures.length" v-model="isPicturesModalActive">
+      <b-carousel :indicator-inside="false" class="picturesCarousel">
+        <b-carousel-item v-for="(item, i) in product.pictures.length" :key="i" class="bigPicture">
+          <span class="image">
+            <img :src="product.pictures[i].url">
+          </span>
+        </b-carousel-item>
+        <template slot="indicators" slot-scope="props">
+          <span class="al image">
+            <img class="thumbPicture" :src="product.pictures[props.i].url" :title="props.i">
+          </span>
+        </template>
+      </b-carousel>
+    </b-modal>
 
     <div class="actions">
       <b-button type="is-info" size="is-small" icon-left="cart-plus" @click="addToCart">{{ $t('cart.add') }}</b-button>
@@ -59,6 +79,9 @@ query ($id: ID!) {
       }
       name
       packaging
+      pictures {
+        url
+      }
       price
     }
   }
@@ -84,6 +107,11 @@ export default {
         quantity: 1
       });
     }
+  },
+  data() {
+    return {
+      isPicturesModalActive: false
+    }
   }
 }
 </script>
@@ -105,5 +133,25 @@ export default {
 .productImg img {
   max-height: 250px;
   object-fit: contain;
+}
+
+.picturesCarousel {
+  background-color: #111;
+}
+.bigPicture {
+  background-color: black;
+  padding: 15px;
+}
+.bigPicture img {
+  max-height: 500px;
+  object-fit: contain;
+}
+.thumbPicture {
+  max-height: 50px;
+  object-fit: contain;
+}
+
+.videoBtn {
+  text-align: right;
 }
 </style>

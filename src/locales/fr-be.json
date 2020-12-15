@@ -26,7 +26,8 @@
   },
   "product": {
     "_": "Produit | Produit | Produits",
-    "no": "Aucun produit disponible pour le moment."
+    "no": "Aucun produit disponible pour le moment.",
+    "pictures": "Photos"
   },
   "no-products-yet": "Il n'y a aucun produit disponible pour le moment.",
   "cart": {
