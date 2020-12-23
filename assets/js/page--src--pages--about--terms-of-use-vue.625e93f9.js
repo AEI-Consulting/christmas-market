@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[5],{"7Ize":function(t,s,e){"use strict";e.r(s);var i={metaInfo:{title:"Terms of use"}},n=e("KHd+"),u=Object(n.a)(i,(function(){var t=this.$createElement,s=this._self._c||t;return s("Layout",[s("h2",{staticClass:"title is-2"},[this._v(this._s(this.$t("about.terms-use")))])])}),[],!1,null,null,null);s.default=u.exports}}]);

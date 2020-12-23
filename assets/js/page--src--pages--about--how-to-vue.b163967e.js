@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[3],{"6i+C":function(t,s,e){"use strict";e.r(s);var i={metaInfo:{title:"How To"}},n=e("KHd+"),a=Object(n.a)(i,(function(){var t=this.$createElement,s=this._self._c||t;return s("Layout",[s("h2",{staticClass:"title is-2"},[this._v(this._s(this.$t("about.user-manual")))])])}),[],!1,null,null,null);s.default=a.exports}}]);
